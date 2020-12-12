@@ -114,8 +114,7 @@ await member.addRole(role)
 const embed = new Discord.RichEmbed()
 .setDescription(`${message.author.username} Added Role ${args[1]} To ${args[0]}`)
 message.channel.send(embed)
-} catch(e) {//message.channel.send("An Error Occurred Maby You Mentioned The Role? Or My Roles Under That Role Try Typing The Name Example &addrole @user Role") 
-console.log(e)}
+} catch(e) {message.channel.send("An Error Occurred Maby You Mentioned The Role? Or My Roles Under That Role Try Typing The Name Example &addrole @user Role") }
 } else if (cmd === `${p}removerole`) {
 if(!message.member.hasPermission('MANAGE_ROLES')) return message.channel.send("You Dont Have The Manage Roles Permission");
     try {
