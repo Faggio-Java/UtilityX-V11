@@ -2,8 +2,6 @@ const Discord = require("discord.js");
 const client = new Discord.Client({ disableMentions: 'everyone'});
 const db = require('quick.db')
 const fs = require("fs");
-const bot = require('tnai')
-const tnai = new bot()
 const got = require('got');
 const moment = require("moment");
 const fetch = require("node-fetch");
@@ -31,7 +29,7 @@ var p = "&";
   if(cmd === `${p}help`){
     const embed = new Discord.RichEmbed()
     .setTitle("Commands")
-    .setDescription("Moderation: &ban &kick &unban &purge &nick &addrole &removerole \n Fun: &kiss &hug &kik &slap &pat \n Utility: &ui &server &avatar &snipe \n Server Settings: &welcomer &themes")
+    .setDescription("Moderation: &ban &kick &unban &purge &nick &addrole &removerole \n Fun: &kiss &hug &punch &slap &pat \n Utility: &ui &server &avatar &snipe \n Server Settings: &welcomer &themes")
     message.channel.send(embed);
   } else if (cmd === `${p}ui`) {
      var user = message.mentions.users.first() || message.author;
