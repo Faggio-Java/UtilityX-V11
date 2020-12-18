@@ -54,55 +54,60 @@ message.channel.send(embed)
     embed.setImage(`${JSON.parse(response.body)[0].data.children[0].data.url}`);
       message.channel.send(embed); })
   } else if (cmd === `${p}kiss`) {
-    let fig = await tnai.sfw.kiss()
-let gif = await tnai.sfw.kiss()
-    const member = message.mentions.members.first() || message.author;
-  if(!member) return message.channel.send("Mention Someone")
-    if(member == message.author) return message.channel.send("You Cant Kiss Yourself")
-const embed = new Discord.RichEmbed()
-.setTitle(`${message.member.displayName} Kissed ${member.displayName}`)
-.setImage(fig)
-message.channel.send(embed)
+       if (message.mentions.users.first()) {
+  var gif = await tnai.sfw.kiss();
+  var con = await tnai.sfw.kiss();
+  var usr = message.mentions.users.first()
+  const embed = new Discord.RichEmbed()
+  .setTitle(`${message.author.username} Kissed ${usr.username}`)
+  .setImage(con)
+if (usr === message.author) return message.channel.send("You Cant Kiss Yourself")
+  message.channel.send(embed)
+} else {message.channel.send("Mention Someone")}
   } else if (cmd === `${p}hug`) {
-    let fig = await tnai.sfw.hug()
-let gif = await tnai.sfw.hug()
-    const member = message.mentions.members.first() || message.author;
-  if(!member) return message.channel.send("Mention Someone")
-    if(member == message.author) return message.channel.send("You Cant Hug Yourself")
-const embed = new Discord.RichEmbed()
-.setTitle(`${message.member.displayName} Hug ${member.displayName}`)
-.setImage(gif)
-message.channel.send(embed)
+       if (message.mentions.users.first()) {
+  var gif = await tnai.sfw.hug();
+  var con = await tnai.sfw.hug();
+  var usr = message.mentions.users.first()
+  const embed = new Discord.RichEmbed()
+  .setTitle(`${message.author.username} Hugged ${usr.username}`)
+  .setImage(con)
+if (usr === message.author) return message.channel.send("You Cant Hug Yourself")
+  message.channel.send(embed)
+} else {message.channel.send("Mention Someone")}
   } else if (cmd === `${p}kik`) {
-    let fig = await tnai.sfw.kick()
-let gif = await tnai.sfw.kick()
-    const member = message.mentions.members.first() || message.author;
-  if(!member) return message.channel.send("Mention Someone")
-    if(member == message.author) return message.channel.send("You Cant Kick Yourself")
-const embed = new Discord.RichEmbed()
-.setTitle(`${message.member.displayName} Kicked ${member.displayName}`)
-.setImage(gif)
-message.channel.send(embed)
+       if (message.mentions.users.first()) {
+  var gif = await tnai.sfw.kick();
+  var con = await tnai.sfw.kick();
+  var usr = message.mentions.users.first()
+  const embed = new Discord.RichEmbed()
+  .setTitle(`${message.author.username} Kicked ${usr.username}`)
+  .setImage(con)
+if (usr === message.author) return message.channel.send("You Cant Kick Yourself")
+  message.channel.send(embed)
+} else {message.channel.send("Mention Someone")}
   } else if (cmd === `${p}slap`) {
-    let fig = await tnai.sfw.slap()
-let gif = await tnai.sfw.slap()
-    const member = message.mentions.members.first() || message.author;
-  if(!member) return message.channel.send("Mention Someone")
-    if(member == message.author) return message.channel.send("You Cant Slap Yourself")
-const embed = new Discord.RichEmbed()
-.setTitle(`${message.member.displayName} Slap ${member.displayName}`)
-.setImage(gif)
-message.channel.send(embed)
+       if (message.mentions.users.first()) {
+  var gif = await tnai.sfw.slap();
+  var con = await tnai.sfw.slap();
+  var usr = message.mentions.users.first()
+  const embed = new Discord.RichEmbed()
+  .setTitle(`${message.author.username} Slapped ${usr.username}`)
+  .setImage(con)
+if (usr === message.author) return message.channel.send("You Cant Slap Yourself")
+  message.channel.send(embed)
+} else {message.channel.send("Mention Someone")}
   } else if (cmd === `${p}pat`) {
-    let fig = await tnai.sfw.pat()
-let gif = await tnai.sfw.pat()
-    const member = message.mentions.members.first() || message.author;
-  if(!member) return message.channel.send("Mention Someone")
-    if(member == message.author) return message.channel.send("You Cant Pat Yourself")
-const embed = new Discord.RichEmbed()
-.setTitle(`${message.member.displayName} Pat ${member.displayName}`)
-.setImage(gif)
-message.channel.send(embed)
+       if (message.mentions.users.first()) {
+  var gif = await tnai.sfw.pat();
+  var con = await tnai.sfw.pat();
+  var usr = message.mentions.users.first()
+  const embed = new Discord.RichEmbed()
+  .setTitle(`${message.author.username} Patted ${usr.username}`)
+  .setImage(con)
+if (usr === message.author) return message.channel.send("You Cant Pat Yourself")
+  message.channel.send(embed)
+} else {message.channel.send("Mention Someone")}
   } else if (cmd === `${p}addrole`) {
 if(!message.member.hasPermission('MANAGE_ROLES')) return message.channel.send("You Dont Have The Manage Roles Permission");
     try {
