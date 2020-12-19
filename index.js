@@ -22,7 +22,7 @@ if (err.message.code === 'ETIMEDOUT') { console.log('ETIMEOUT', util.inspect(err
 client.on("message", async (message) => {
   if (message.author.bot) return;
 
-var p = "&";
+let p = "&";
   const args = message.content.slice().trim().split(/ +/g);
   const cmd = args.shift().toLowerCase();
 
@@ -32,8 +32,8 @@ var p = "&";
     .setDescription("Moderation: &ban &kick &unban &purge &nick &addrole &removerole \n Fun: &kiss &hug &punch &slap &pat \n Utility: &ui &server &avatar &snipe \n Server Settings: &welcomer &themes")
     message.channel.send(embed);
   } else if (cmd === `${p}ui`) {
-     var user = message.mentions.users.first() || message.author;
-    var member = message.mentions.members.first() || message.member;
+     let user = message.mentions.users.first() || message.author;
+    let member = message.mentions.members.first() || message.member;
 
 const embed = new Discord.RichEmbed()
 .setTitle(`${member.displayName}'s User Info`)
@@ -53,7 +53,7 @@ message.channel.send(embed)
       message.channel.send(embed); })
   } else if (cmd === `${p}kiss`) {
        if (message.mentions.users.first()) {
-   var kisses = ["https://cdn.weeb.sh/images/ByVQha_w-.gif","https://cdn.weeb.sh/images/ryoW3T_vW.gif","https://cdn.weeb.sh/images/B1yv36_PZ.gif","https://cdn.weeb.sh/images/ryEvhTOwW.gif","https://cdn.weeb.sh/images/SyY0j6Ov-.gif"]
+   let kisses = ["https://cdn.weeb.sh/images/ByVQha_w-.gif","https://cdn.weeb.sh/images/ryoW3T_vW.gif","https://cdn.weeb.sh/images/B1yv36_PZ.gif","https://cdn.weeb.sh/images/ryEvhTOwW.gif","https://cdn.weeb.sh/images/SyY0j6Ov-.gif"]
   let kisser = Math.floor(Math.random() * Math.floor(kisses.length)); 
 const kissed = new Discord.RichEmbed()
 .setTitle(`${message.mentions.users.first().username} Was Kissed By ${message.author.username}`)
@@ -64,7 +64,7 @@ if (usr === message.author) return message.channel.send("You Cant Kiss Yourself"
 } else {message.channel.send("Mention Someone")}
   } else if (cmd === `${p}hug`) {
        if (message.mentions.users.first()) {
-   var hugs = ["https://cdn.weeb.sh/images/rkx1dJ25z.gif","https://cdn.weeb.sh/images/Sk-xxs3C-.gif","https://cdn.weeb.sh/images/HJTWcTNCZ.gif","https://cdn.weeb.sh/images/rk_6GyncG.gif","https://cdn.weeb.sh/images/S18oOuQw-.gif"]
+   let hugs = ["https://cdn.weeb.sh/images/rkx1dJ25z.gif","https://cdn.weeb.sh/images/Sk-xxs3C-.gif","https://cdn.weeb.sh/images/HJTWcTNCZ.gif","https://cdn.weeb.sh/images/rk_6GyncG.gif","https://cdn.weeb.sh/images/S18oOuQw-.gif"]
   let hugger = Math.floor(Math.random() * Math.floor(hugs.length)); 
 const hugged = new Discord.RichEmbed()
 .setTitle(`${message.mentions.users.first().username} Was Hugged By ${message.author.username}`)
@@ -74,7 +74,7 @@ if (usr === message.author) return message.channel.send("You Cant Hug Yourself")
 } else {message.channel.send("Mention Someone")}
   } else if (cmd === `${p}punch`) {
        if (message.mentions.users.first()) {
-   var punchs = ["https://cdn.weeb.sh/images/SJAfH5TOz.gif","https://cdn.weeb.sh/images/SyYbP6W-z.gif","https://cdn.weeb.sh/images/rkkZP6Z-G.gif","https://cdn.weeb.sh/images/rJHLDT-Wz.gif","https://cdn.weeb.sh/images/rJRUk2PLz.gif"]
+   let punchs = ["https://cdn.weeb.sh/images/SJAfH5TOz.gif","https://cdn.weeb.sh/images/SyYbP6W-z.gif","https://cdn.weeb.sh/images/rkkZP6Z-G.gif","https://cdn.weeb.sh/images/rJHLDT-Wz.gif","https://cdn.weeb.sh/images/rJRUk2PLz.gif"]
   let puncher = Math.floor(Math.random() * Math.floor(punchs.length)); 
 const punchsed = new Discord.RichEmbed()
 .setTitle(`${message.mentions.users.first().username} Was Punched By ${message.author.username}`)
@@ -84,7 +84,7 @@ if (usr === message.author) return message.channel.send("You Cant Punch Yourself
 } else {message.channel.send("Mention Someone")}
   } else if (cmd === `${p}slap`) {
        if (message.mentions.users.first()) {
-   var slaps = ["https://cdn.weeb.sh/images/BkzyEktv-.gif","https://cdn.weeb.sh/images/SkSCyl5yz.gif","https://cdn.weeb.sh/images/ryv3myFDZ.gif","https://cdn.weeb.sh/images/HkA6mJFP-.gif","https://cdn.weeb.sh/images/rJvR71KPb.gif"]
+   let slaps = ["https://cdn.weeb.sh/images/BkzyEktv-.gif","https://cdn.weeb.sh/images/SkSCyl5yz.gif","https://cdn.weeb.sh/images/ryv3myFDZ.gif","https://cdn.weeb.sh/images/HkA6mJFP-.gif","https://cdn.weeb.sh/images/rJvR71KPb.gif"]
   let slapper = Math.floor(Math.random() * Math.floor(slaps.length)); 
 const slapped = new Discord.RichEmbed()
 .setTitle(`${message.mentions.users.first().username} Was Slapped By ${message.author.username}`)
@@ -94,7 +94,7 @@ if (usr === message.author) return message.channel.send("You Cant Slap Yourself"
 } else {message.channel.send("Mention Someone")}
   } else if (cmd === `${p}pat`) {
        if (message.mentions.users.first()) {
-   var pats = ["https://cdn.weeb.sh/images/BJp1lyYD-.gif","https://cdn.weeb.sh/images/B1TQcTNCZ.gif","https://cdn.weeb.sh/images/BJnD9a4Rb.gif","https://cdn.weeb.sh/images/Byd3kktw-.gif","https://cdn.weeb.sh/images/rkBZkRttW.gif"]
+   let pats = ["https://cdn.weeb.sh/images/BJp1lyYD-.gif","https://cdn.weeb.sh/images/B1TQcTNCZ.gif","https://cdn.weeb.sh/images/BJnD9a4Rb.gif","https://cdn.weeb.sh/images/Byd3kktw-.gif","https://cdn.weeb.sh/images/rkBZkRttW.gif"]
   let patter = Math.floor(Math.random() * Math.floor(pats.length)); 
 const patted = new Discord.RichEmbed()
 .setTitle(`${message.mentions.users.first().username} Was Patted By ${message.author.username}`)
@@ -183,7 +183,7 @@ message.channel.send(embed)
     message.channel.send(embed);
   } else if (cmd === `${p}welcomer`) {
 if (!message.member.hasPermission('ADMINISTRATOR')) return message.channel.send("You Dont Have The ADMINISTRATOR Permission");
-    var joiner = db.get(`joinz_${message.guild.id}`)
+    let joiner = db.get(`joinz_${message.guild.id}`)
     if(joiner === null) joiner = 0;
     const embed = new Discord.RichEmbed()
   if(args[0] === "on") {
@@ -199,11 +199,11 @@ embed.setDescription("Welcomer Was Turned Off")
    message.channel.send(embed)
   } else if (cmd === `${p}themes`) {
 if (!message.member.hasPermission('ADMINISTRATOR')) return message.channel.send("You Dont Have The ADMINISTRATOR Permission");
-    var thone = db.fetch(`onef_${message.guild.id}`)
-    var thtwo = db.fetch(`twof_${message.guild.id}`)
-    var ththree = db.fetch(`threef_${message.guild.id}`)
-    var thfour = db.fetch(`fourf_${message.guild.id}`)
-    var thfive = db.fetch(`fivef_${message.guild.id}`)
+    let thone = db.fetch(`onef_${message.guild.id}`)
+    let thtwo = db.fetch(`twof_${message.guild.id}`)
+    let ththree = db.fetch(`threef_${message.guild.id}`)
+    let thfour = db.fetch(`fourf_${message.guild.id}`)
+    let thfive = db.fetch(`fivef_${message.guild.id}`)
 
 if(thone === null) thone = 0;
 if(thtwo === null) thtwo = 0;
@@ -251,11 +251,11 @@ const applyText = (canvas, text) => {
 client.on("guildMemberAdd", async (member) => {
     const joiner = db.get(`joinz_${member.guild.id}`)
 
-    var thone = db.get(`onef_${member.guild.id}`)
-    var thtwo = db.get(`twof_${member.guild.id}`)
-    var ththree = db.get(`threef_${member.guild.id}`)
-    var thfour = db.get(`fourf_${member.guild.id}`)
-    var thfive = db.get(`fivef_${member.guild.id}`)
+    let thone = db.get(`onef_${member.guild.id}`)
+    let thtwo = db.get(`twof_${member.guild.id}`)
+    let ththree = db.get(`threef_${member.guild.id}`)
+    let thfour = db.get(`fourf_${member.guild.id}`)
+    let thfive = db.get(`fivef_${member.guild.id}`)
 if(thone === null) thone = 0;
 if(thtwo === null) thtwo = 0;
 if(ththree === null) ththree = 0;
@@ -264,17 +264,17 @@ if(thfive === null) thfive = 0;
 
     if(joiner >= 1) {
       if(thone === 0 && thtwo === 0 && ththree === 0 && thfour === 0 && thfive === 0) {} else {
-    const channel = member.guild.channels.find(ch => ch.name === 'welcome');
-    if (!channel) return;
+    const chn = member.guild.channels.find(ch => ch.name === 'welcome');
+    if(!chn) return;
 
     const canvas = Canvas.createCanvas(700, 250);
     const ctx = canvas.getContext('2d');
-    var background = "";
-if(thone >= 1) {var background = await Canvas.loadImage('./Theme-1.jpg');}
-if(thtwo >= 1) {var background = await Canvas.loadImage('./Theme-2.jpg');}
-if(ththree >= 1) {var background = await Canvas.loadImage('./Theme-3.jpg');} 
-if(thfour >= 1) {var background = await Canvas.loadImage('./Theme-4.jpg');}
-if(thfive >= 1) {var background = await Canvas.loadImage('./Theme-5.jpg');}
+    let background = "";
+if(thone >= 1) {let background = await Canvas.loadImage('./Theme-1.jpg');}
+if(thtwo >= 1) {let background = await Canvas.loadImage('./Theme-2.jpg');}
+if(ththree >= 1) {let background = await Canvas.loadImage('./Theme-3.jpg');} 
+if(thfour >= 1) {let background = await Canvas.loadImage('./Theme-4.jpg');}
+if(thfive >= 1) {let background = await Canvas.loadImage('./Theme-5.jpg');}
     ctx.drawImage(background, 0, 0, canvas.width, canvas.height);
 
     ctx.strokeStyle = '#74037b';
@@ -298,17 +298,18 @@ if(thfive >= 1) {var background = await Canvas.loadImage('./Theme-5.jpg');}
 
     const attachment = new Discord.Attachment(canvas.toBuffer(), 'welcome-image.png');
 
-    channel.send(attachment) } }
+    chn.send(attachment) } }
 });
 
 client.on("guildMemberRemove", async (member) => {
       const joiner = db.get(`joinz_${member.guild.id}`)
 
-    var thone = db.get(`onef_${member.guild.id}`)
-    var thtwo = db.get(`twof_${member.guild.id}`)
-    var ththree = db.get(`threef_${member.guild.id}`)
-    var thfour = db.get(`fourf_${member.guild.id}`)
-    var thfive = db.get(`fivef_${member.guild.id}`)
+    let thone = db.get(`onef_${member.guild.id}`)
+    let thtwo = db.get(`twof_${member.guild.id}`)
+    let ththree = db.get(`threef_${member.guild.id}`)
+    let thfour = db.get(`fourf_${member.guild.id}`)
+    let thfive = db.get(`fivef_${member.guild.id}`)
+    
 if(thone === null) thone = 0;
 if(thtwo === null) thtwo = 0;
 if(ththree === null) ththree = 0;
@@ -317,16 +318,16 @@ if(thfive === null) thfive = 0;
 
       if(joiner >= 1) {
       if(thone === 0 && thtwo === 0 && ththree === 0 && thfour === 0 && thfive === 0) {} else {
-    const channel = member.guild.channels.find(ch => ch.name === 'welcome');
-
+    const chn = member.guild.channels.find(ch => ch.name === 'welcome');
+    if(!chn) return;
     const canvas = Canvas.createCanvas(700, 250);
     const ctx = canvas.getContext('2d');
-var background = "";
-if(thone >= 1) {var background = await Canvas.loadImage('./Theme-1.jpg');}
-if(thtwo >= 1) {var background = await Canvas.loadImage('./Theme-2.jpg');}
-if(ththree >= 1) {var background = await Canvas.loadImage('./Theme-3.jpg');} 
-if(thfour >= 1) {var background = await Canvas.loadImage('./Theme-4.jpg');}
-if(thfive >= 1) {var background = await Canvas.loadImage('./Theme-5.jpg');}
+let background = "";
+if(thone >= 1) {let background = await Canvas.loadImage('./Theme-1.jpg');}
+if(thtwo >= 1) {let background = await Canvas.loadImage('./Theme-2.jpg');}
+if(ththree >= 1) {let background = await Canvas.loadImage('./Theme-3.jpg');} 
+if(thfour >= 1) {let background = await Canvas.loadImage('./Theme-4.jpg');}
+if(thfive >= 1) {let background = await Canvas.loadImage('./Theme-5.jpg');}
 
     ctx.drawImage(background, 0, 0, canvas.width, canvas.height);
 
@@ -347,7 +348,7 @@ if(thfive >= 1) {var background = await Canvas.loadImage('./Theme-5.jpg');}
 
     const attachment = new Discord.Attachment(canvas.toBuffer(), 'leave-image.png');
 
-    channel.send(attachment) } }
+    chn.send(attachment) } }
 });
 
 client.on('messageDelete', message => {
