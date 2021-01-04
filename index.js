@@ -165,10 +165,9 @@ message.channel.send(embed)
       .setDescription(`${member.displayName} Was Kicked By ${message.author.username}`)
  message.channel.send(Kick)
   } else if (cmd === `${p}purge`) {
-    try {
-    if(!args[0]) return message.channel.send("Mention The Amount Of Msgs To Purge");
+   if(!args[0]) return message.channel.send("Mention The Amount Of Msgs To Purge");
+   if(args[0] > 101) return message.channel.send("Please Use A Number Under 100");
     message.channel.bulkDelete(args[0]);
-  } catch(e) {message.channel.send("Please Use A Number Under 100")}
   } else if (cmd === `${p}snipe`) {
 const embed = new Discord.RichEmbed()
 .setDescription(`${db.get(`${message.guild.id}_author`, `${message.author.username}`)} Said ${db.get(`${message.guild.id}_message`, `${message.content}`)}`)
