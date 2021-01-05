@@ -37,7 +37,7 @@ let p = "&";
 
 const embed = new Discord.RichEmbed()
 .setTitle(`${member.displayName}'s User Info`)
-.setDescription(`Username: ${user.username} \n Nickname: ${member.displayName} \n ID: ${user.id} \n Created: ${moment.utc(member.user.createdAt).format("dddd, MMMM Do YYYY, HH:mm")} \n Joined: ${moment.utc(message.member.joinedAt).format("dddd, MMMM Do YYYY, HH:mm")}`);
+.setDescription(`Username: ${user.username} \n Nickname: ${member.displayName} \n ID: ${user.id} \n Created: ${moment.utc(member.user.createdAt).format("dddd, MMMM Do YYYY, HH:mm")} \n Joined: ${moment.utc(member.joinedAt).format("dddd, MMMM Do YYYY, HH:mm")}`);
 message.channel.send(embed)
   } else if (cmd === `${p}server`) {
     const embed = new Discord.RichEmbed()
