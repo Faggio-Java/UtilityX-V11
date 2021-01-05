@@ -53,47 +53,52 @@ message.channel.send(embed)
       message.channel.send(embed); })
   } else if (cmd === `${p}kiss`) {
        if (message.mentions.users.first()) {
+        
    let kisses = ["https://cdn.weeb.sh/images/ByVQha_w-.gif","https://cdn.weeb.sh/images/ryoW3T_vW.gif","https://cdn.weeb.sh/images/B1yv36_PZ.gif","https://cdn.weeb.sh/images/ryEvhTOwW.gif","https://cdn.weeb.sh/images/SyY0j6Ov-.gif"]
   let kisser = Math.floor(Math.random() * Math.floor(kisses.length)); 
 const kissed = new Discord.RichEmbed()
 .setTitle(`${message.mentions.users.first().username} Was Kissed By ${message.author.username}`)
 .setImage(kisses[kisser])
 message.channel.send(kissed)
-if (usr === message.author) return message.channel.send("You Cant Kiss Yourself")
+if (message.mentions.users.first() === message.author) return message.channel.send("You Cant Kiss Yourself")
   message.channel.send(embed)
 } else {message.channel.send("Mention Someone")}
   } else if (cmd === `${p}hug`) {
        if (message.mentions.users.first()) {
+                
    let hugs = ["https://cdn.weeb.sh/images/rkx1dJ25z.gif","https://cdn.weeb.sh/images/Sk-xxs3C-.gif","https://cdn.weeb.sh/images/HJTWcTNCZ.gif","https://cdn.weeb.sh/images/rk_6GyncG.gif","https://cdn.weeb.sh/images/S18oOuQw-.gif"]
   let hugger = Math.floor(Math.random() * Math.floor(hugs.length)); 
 const hugged = new Discord.RichEmbed()
 .setTitle(`${message.mentions.users.first().username} Was Hugged By ${message.author.username}`)
 .setImage(hugs[hugger])
-if (usr === message.author) return message.channel.send("You Cant Hug Yourself")
+if (message.mentions.users.first() === message.author) return message.channel.send("You Cant Hug Yourself")
   message.channel.send(hugged)
 } else {message.channel.send("Mention Someone")}
   } else if (cmd === `${p}punch`) {
        if (message.mentions.users.first()) {
+                
    let punchs = ["https://cdn.weeb.sh/images/SJAfH5TOz.gif","https://cdn.weeb.sh/images/SyYbP6W-z.gif","https://cdn.weeb.sh/images/rkkZP6Z-G.gif","https://cdn.weeb.sh/images/rJHLDT-Wz.gif","https://cdn.weeb.sh/images/rJRUk2PLz.gif"]
   let puncher = Math.floor(Math.random() * Math.floor(punchs.length)); 
 const punchsed = new Discord.RichEmbed()
 .setTitle(`${message.mentions.users.first().username} Was Punched By ${message.author.username}`)
 .setImage(punchs[puncher])
-if (usr === message.author) return message.channel.send("You Cant Punch Yourself")
+if (message.mentions.users.first() === message.author) return message.channel.send("You Cant Punch Yourself")
   message.channel.send(punchsed)
 } else {message.channel.send("Mention Someone")}
   } else if (cmd === `${p}slap`) {
        if (message.mentions.users.first()) {
+                
    let slaps = ["https://cdn.weeb.sh/images/BkzyEktv-.gif","https://cdn.weeb.sh/images/SkSCyl5yz.gif","https://cdn.weeb.sh/images/ryv3myFDZ.gif","https://cdn.weeb.sh/images/HkA6mJFP-.gif","https://cdn.weeb.sh/images/rJvR71KPb.gif"]
   let slapper = Math.floor(Math.random() * Math.floor(slaps.length)); 
 const slapped = new Discord.RichEmbed()
 .setTitle(`${message.mentions.users.first().username} Was Slapped By ${message.author.username}`)
 .setImage(slaps[slapper])
-if (usr === message.author) return message.channel.send("You Cant Slap Yourself")
+if (message.mentions.users.first() === message.author) return message.channel.send("You Cant Slap Yourself")
   message.channel.send(slapped)
 } else {message.channel.send("Mention Someone")}
   } else if (cmd === `${p}pat`) {
        if (message.mentions.users.first()) {
+                
    let pats = ["https://cdn.weeb.sh/images/BJp1lyYD-.gif","https://cdn.weeb.sh/images/B1TQcTNCZ.gif","https://cdn.weeb.sh/images/BJnD9a4Rb.gif","https://cdn.weeb.sh/images/Byd3kktw-.gif","https://cdn.weeb.sh/images/rkBZkRttW.gif"]
   let patter = Math.floor(Math.random() * Math.floor(pats.length)); 
 const patted = new Discord.RichEmbed()
