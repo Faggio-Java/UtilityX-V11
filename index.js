@@ -116,7 +116,7 @@ if(!message.member.hasPermission('MANAGE_ROLES')) return message.channel.send("Y
     let role = message.guild.roles.find(r => r.name === message.content.replace(`&addrole ${args[0]} `, ""))
 await member.addRole(role)
 const embed = new Discord.RichEmbed()
-.setDescription(`${message.author.username} Added Role ${args[1]} To ${args[0]}`)
+.setDescription(`${message.author.username} Added Role ${message.content.replace(`&addrole ${args[0]} `, "")} To ${args[0]}`)
 message.channel.send(embed)
 } catch(e) {message.channel.send("An Error Occurred Maby You Mentioned The Role? Or My Roles Under That Role Try Typing The Name Example &addrole @user Role") }
 } else if (cmd === `${p}removerole`) {
@@ -128,7 +128,7 @@ let member = message.mentions.members.first();
     let role = message.guild.roles.find(r => r.name === message.content.replace(`&removerole ${args[0]} `, ""))
 await member.removeRole(role)
 const embed = new Discord.RichEmbed()
-.setDescription(`${message.author.username} Removed Role ${args[1]} To ${args[0]}`)
+.setDescription(`${message.author.username} Removed Role ${message.content.replace(`&removerole ${args[0]} `, "")} To ${args[0]}`)
 message.channel.send(embed)
 } catch(e) {message.channel.send("An Error Occurred Maby You Mentioned The Role? Or My Roles Under That Role Try Typing The Name Example &removerole @user Role")} 
 } else if (cmd === `${p}avatar`) {
