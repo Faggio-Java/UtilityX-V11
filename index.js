@@ -21,16 +21,21 @@ if (err.message.code === 'ETIMEDOUT') { console.log('ETIMEOUT', util.inspect(err
 
 client.on("message", async (message) => {
   if (message.author.bot) return;
-
-let p = "&";
+  if(db.fetch(`prefix_${message.guild}`) === null) return db.set(`prefix_${message.guild}`, `&`);
+let p = `${db.fetch(`prefix_${message.guild}`)}`;
   const args = message.content.slice().trim().split(/ +/g);
   const cmd = args.shift().toLowerCase();
 
   if(cmd === `${p}help`){
     const embed = new Discord.RichEmbed()
     .setTitle("Commands")
-    .setDescription("Moderation: &ban &kick &unban &purge &nick &addrole &removerole \n Fun: &kiss &hug &punch &slap &pat \n Utility: &ui &server &avatar &snipe \n Server Settings: &welcomer &themes")
+    .setDescription("Moderation: &ban &kick &unban &purge &nick &addrole &removerole \n Fun: &kiss &hug &punch &slap &pat \n Utility: &ui &server &avatar &snipe \n Server Settings: &prefix &welcomer &themes")
     message.channel.send(embed);
+  } else if(cmd === `${p}prefix`) {
+    db.fetch(`prefix_${message.guild}`)
+    if(!args[0]) return message.channel.send(`Cant Set Prefix As Nothing`);
+    db.set(`prefix_${message.guild}`, `${args[0]}`)
+    message.channel.send(`Set Prefix To ${args[0]}`)
   } else if (cmd === `${p}ui`) {
      let user = message.mentions.users.first() || message.author;
     let member = message.mentions.members.first() || message.member;
