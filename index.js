@@ -44,6 +44,11 @@ const embed = new Discord.RichEmbed()
 .setTitle(`${member.displayName}'s User Info`)
 .setDescription(`Username: ${user.username} \n Nickname: ${member.displayName} \n ID: ${user.id} \n Created: ${moment.utc(member.user.createdAt).format("dddd, MMMM Do YYYY, HH:mm")} \n Joined: ${moment.utc(member.joinedAt).format("dddd, MMMM Do YYYY, HH:mm")}`);
 message.channel.send(embed)
+  } else if (cmd === `${p}info`) {
+ const embed = new Discord.RichEmbed()
+  .setTitle(`Bot Info`)
+  .setDescription(`Uptime: ${moment.duration(client.uptime).format("dddd, MMMM Do YYYY, HH:mm")} \n Creator: DecoyOctopus#1010 \n Server Amount: ${client.guilds.size} User Amount: ${client.guilds.reduce((a, g) => a + g.memberCount, 0)}`)
+  message.channel.send(embed)
   } else if (cmd === `${p}server`) {
     const embed = new Discord.RichEmbed()
                 .setTitle(`${message.guild}'s Info`)
