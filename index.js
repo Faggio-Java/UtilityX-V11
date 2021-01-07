@@ -76,18 +76,16 @@ message.channel.send(`${args[0]} Has Reached Max Warns For This Server`)
 } else if(cmd === `${p}resetwarnings`) {
    if (!message.member.hasPermission('ADMINISTRATOR')) return message.channel.send("You Dont Have The Administrator Permission");
        if (message.mentions.users.first()) {
-        if(db.get(`warns_${message.guild}_${message.mentions.users.first()}`) === 1) {
+
 db.set(`warn_${message.guild}_${message.mentions.users.first()}`,`None`)
 db.set(`warner_${message.guild}_${message.mentions.users.first()}`, `None`)
-db.subtract(`warns_${message.guild}_${message.mentions.users.first()}`, 1) 
-} else if(db.get(`warns_${message.guild}_${message.mentions.users.first()}`) === 2) {
+db.set(`warns_${message.guild}_${message.mentions.users.first()}`, 0) 
+
 db.set(`warn2_${message.guild}_${message.mentions.users.first()}`,`None`)
 db.set(`warner2_${message.guild}_${message.mentions.users.first()}`, `None`)
-db.subtract(`warns_${message.guild}_${message.mentions.users.first()}`, 2)
-} else if(db.get(`warns_${message.guild}_${message.mentions.users.first()}`) === 3) {
+
 db.set(`warn3_${message.guild}_${message.mentions.users.first()}`,`None`)
 db.set(`warner3_${message.guild}_${message.mentions.users.first()}`, `None`)
-db.subtract(`warns_${message.guild}_${message.mentions.users.first()}`, 3) }
 message.channel.send(`Cleared Warns For ${args[0]}`)
       } else {message.channel.send(`Mention Someone`)}
 } else if(cmd === `${p}warnings`) {
