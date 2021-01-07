@@ -29,7 +29,7 @@ let p = `${db.fetch(`prefix_${message.guild}`)}`;
   if(cmd === `${p}help`){
     const embed = new Discord.RichEmbed()
     .setTitle("Commands")
-    .setDescription(`Moderation: ${p}ban ${p}kick ${p}unban ${p}purge ${p}nick ${p}addrole ${p}removerole \n Fun: ${p}kiss ${p}hug ${p}punch ${p}slap ${p}pat \n Utility: ${p}ui ${p}server ${p}avatar ${p}snipe \n Server Settings: ${p}prefix ${p}welcomer ${p}themes`)
+    .setDescription(`Moderation: ${p}ban ${p}kick ${p}unban ${p}purge ${p}nick ${p}addrole ${p}removerole ${p}warn ${p}warnings ${p}resetwarnings \n Fun: ${p}kiss ${p}hug ${p}punch ${p}slap ${p}pat \n Utility: ${p}ui ${p}server ${p}avatar ${p}snipe \n Server Settings: ${p}prefix ${p}welcomer ${p}themes`)
     message.channel.send(embed);
   } else if(cmd === `${p}prefix`) {
     db.fetch(`prefix_${message.guild}`)
@@ -49,6 +49,62 @@ message.channel.send(embed)
   .setTitle(`Bot Info`)
   .setDescription(`Uptime: ${moment.duration(client.uptime).format("dddd, MMMM Do YYYY, HH:mm")} \n Creator: DecoyOctopus#1010 \n Server Amount: ${client.guilds.size} User Amount: ${client.guilds.reduce((a, g) => a + g.memberCount, 0)}`)
   message.channel.send(embed)
+} else if (cmd === `${p}warn`) {
+  if (!message.member.hasPermission('ADMINISTRATOR')) return message.channel.send("You Dont Have The Administrator Permission");
+         if (message.mentions.users.first()) {
+            let levelz = db.get(`warns_${message.guild}_${message.mentions.users.first()}`)
+              if(levelz === null) levelz = 0;
+  if(!args[1]) return message.channel.send(`Please Define A Reason To Warn ${args[0]}`);
+  if(levelz === 0) {
+db.set(`warn_${message.guild}_${message.mentions.users.first()}`,`${message.content.replace(`${p}warn ${args[0]}`,``)}`)
+db.set(`warner_${message.guild}_${message.mentions.users.first()}`, `${message.author.username}`)
+db.add(`warns_${message.guild}_${message.mentions.users.first()}`, 1)
+message.channel.send(`Warned ${args[0]} Reason ${message.content.replace(`${p}warn ${args[0]}`,``)}`)
+} else if(levelz === 1) {
+db.set(`warn2_${message.guild}_${message.mentions.users.first()}`,`${message.content.replace(`${p}warn ${args[0]}`,``)}`)
+db.set(`warner2_${message.guild}_${message.mentions.users.first()}`, `${message.author.username}`)
+db.add(`warns_${message.guild}_${message.mentions.users.first()}`, 1)
+message.channel.send(`Warned ${args[0]} Reason ${message.content.replace(`${p}warn ${args[0]}`,``)}`)
+} else if(levelz === 2) {
+db.set(`warn3_${message.guild}_${message.mentions.users.first()}`,`${message.content.replace(`${p}warn ${args[0]}`,``)}`)
+db.set(`warner3_${message.guild}_${message.mentions.users.first()}`, `${message.author.username}`)
+db.add(`warns_${message.guild}_${message.mentions.users.first()}`, 1)
+message.channel.send(`Warned ${args[0]} Reason ${message.content.replace(`${p}warn ${args[0]}`,``)}`)
+} else if(levelz === 3) {
+message.channel.send(`${args[0]} Has Reached Max Warns For This Server`)
+} } else {message.channel.send(`Mention Someone`)}
+} else if(cmd === `${p}resetwarnings`) {
+   if (!message.member.hasPermission('ADMINISTRATOR')) return message.channel.send("You Dont Have The Administrator Permission");
+       if (message.mentions.users.first()) {
+        if(db.get(`warns_${message.guild}_${message.mentions.users.first()}`) === 1) {
+db.set(`warn_${message.guild}_${message.mentions.users.first()}`,`None`)
+db.set(`warner_${message.guild}_${message.mentions.users.first()}`, `None`)
+db.subtract(`warns_${message.guild}_${message.mentions.users.first()}`, 1) 
+} else if(db.get(`warns_${message.guild}_${message.mentions.users.first()}`) === 2) {
+db.set(`warn2_${message.guild}_${message.mentions.users.first()}`,`None`)
+db.set(`warner2_${message.guild}_${message.mentions.users.first()}`, `None`)
+db.subtract(`warns_${message.guild}_${message.mentions.users.first()}`, 2)
+} else if(db.get(`warns_${message.guild}_${message.mentions.users.first()}`) === 3) {
+db.set(`warn3_${message.guild}_${message.mentions.users.first()}`,`None`)
+db.set(`warner3_${message.guild}_${message.mentions.users.first()}`, `None`)
+db.subtract(`warns_${message.guild}_${message.mentions.users.first()}`, 3) }
+message.channel.send(`Cleared Warns For ${args[0]}`)
+      } else {message.channel.send(`Mention Someone`)}
+} else if(cmd === `${p}warnings`) {
+  if (!message.member.hasPermission('ADMINISTRATOR')) return message.channel.send("You Dont Have The Administrator Permission");
+  let membe = message.mentions.users.first() || message.author;
+  if(db.get(`warn_${message.guild}_${membe}`) === null) {db.set(`warn_${message.guild}_${membe}`,`None`)}
+ if(db.get(`warn2_${message.guild}_${membe}`) === null) {db.set(`warn2_${message.guild}_${membe}`,`None`)}
+  if(db.get(`warn3_${message.guild}_${membe}`) === null) {db.set(`warn3_${message.guild}_${membe}`,`None`)}
+
+  if(db.get(`warner_${message.guild}_${membe}`) === null) {db.set(`warner_${message.guild}_${membe}`,`None`)}
+if(db.get(`warner2_${message.guild}_${membe}`) === null) {db.set(`warner2_${message.guild}_${membe}`,`None`)}
+  if(db.get(`warner3_${message.guild}_${membe}`) === null) {db.set(`warner3_${message.guild}_${membe}`,`None`)}
+            let embed = new Discord.RichEmbed()
+            .setTitle(`${membe.username} Warnings`)
+            .setDescription(`1: ${db.get(`warn_${message.guild}_${membe}`)} Warned By ${db.get(`warner_${message.guild}_${membe}`)} \n 2: ${db.get(`warn2_${message.guild}_${membe}`)} Warned By ${db.get(`warner2_${message.guild}_${membe}`)} \n 3: ${db.get(`warn3_${message.guild}_${membe}`)} Warned By ${db.get(`warner3_${message.guild}_${membe}`)}`)
+            .setFooter(`Cmd Executed By ${message.author.username}`)
+            message.channel.send(embed)
   } else if (cmd === `${p}server`) {
     const embed = new Discord.RichEmbed()
                 .setTitle(`${message.guild}'s Info`)
