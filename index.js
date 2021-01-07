@@ -3,13 +3,15 @@ const client = new Discord.Client({ disableMentions: 'everyone'});
 const db = require('quick.db')
 const fs = require("fs");
 const got = require('got');
-const moment = require("moment");
+const moment = require("moment"); 
+require("moment-duration-format")
 const fetch = require("node-fetch");
 const Canvas = require('canvas')
 
 
 //Bots On Discord.js V11 Cause i just prefer it 
-client.once('ready', (message) => {
+client.on('ready', (message) => {
+  client.guilds.forEach(g => console.log(g.name))
   console.log(`Logged in as ${client.user.tag}!`);
   client.user.setPresence({ game: { name: '&help For List Of Cmds' }, status: 'online' });
 });
@@ -29,7 +31,7 @@ let p = `${db.fetch(`prefix_${message.guild}`)}`;
   if(cmd === `${p}help`){
     const embed = new Discord.RichEmbed()
     .setTitle("Commands")
-    .setDescription(`Moderation: ${p}ban ${p}kick ${p}unban ${p}purge ${p}nick ${p}addrole ${p}removerole ${p}warn ${p}warnings ${p}resetwarnings \n Fun: ${p}kiss ${p}hug ${p}punch ${p}slap ${p}pat \n Utility: ${p}ui ${p}server ${p}avatar ${p}snipe \n Server Settings: ${p}prefix ${p}welcomer ${p}themes`)
+    .setDescription(`Moderation: ${p}ban ${p}kick ${p}unban ${p}purge ${p}nick ${p}addrole ${p}removerole ${p}warn ${p}warnings ${p}resetwarnings \n Fun: ${p}kiss ${p}hug ${p}punch ${p}slap ${p}pat \n Utility: ${p}ui ${p}server ${p}avatar ${p}snipe \n Server Settings: ${p}prefix ${p}autorole ${p}welcomer ${p}themes`)
     message.channel.send(embed);
   } else if(cmd === `${p}prefix`) {
     db.fetch(`prefix_${message.guild}`)
@@ -177,10 +179,10 @@ if(!message.member.hasPermission('MANAGE_ROLES')) return message.channel.send("Y
     let member = message.mentions.members.first();
     if(!member) return message.channel.send("Mention Someone");
     if(!args[1]) return message.channel.send("Mention a Role");
-    let role = message.guild.roles.find(r => r.name === message.content.replace(`&addrole ${args[0]} `, ""))
+    let role = message.guild.roles.find(r => r.name === message.content.replace(`${p}addrole ${args[0]} `, ""))
 await member.addRole(role)
 const embed = new Discord.RichEmbed()
-.setDescription(`${message.author.username} Added Role ${message.content.replace(`&addrole ${args[0]} `, "")} To ${args[0]}`)
+.setDescription(`${message.author.username} Added Role ${message.content.replace(`${p}addrole ${args[0]} `, "")} To ${args[0]}`)
 message.channel.send(embed)
 } catch(e) {message.channel.send("An Error Occurred Maby You Mentioned The Role? Or My Roles Under That Role Try Typing The Name Example &addrole @user Role") }
 } else if (cmd === `${p}removerole`) {
@@ -189,10 +191,10 @@ if(!message.member.hasPermission('MANAGE_ROLES')) return message.channel.send("Y
 let member = message.mentions.members.first();
     if(!member) return message.channel.send("Mention Someone");
     if(!args[1]) return message.channel.send("Mention a Role");
-    let role = message.guild.roles.find(r => r.name === message.content.replace(`&removerole ${args[0]} `, ""))
+    let role = message.guild.roles.find(r => r.name === message.content.replace(`${p}removerole ${args[0]} `, ""))
 await member.removeRole(role)
 const embed = new Discord.RichEmbed()
-.setDescription(`${message.author.username} Removed Role ${message.content.replace(`&removerole ${args[0]} `, "")} To ${args[0]}`)
+.setDescription(`${message.author.username} Removed Role ${message.content.replace(`${p}removerole ${args[0]} `, "")} To ${args[0]}`)
 message.channel.send(embed)
 } catch(e) {message.channel.send("An Error Occurred Maby You Mentioned The Role? Or My Roles Under That Role Try Typing The Name Example &removerole @user Role")} 
 } else if (cmd === `${p}avatar`) {
@@ -251,6 +253,25 @@ message.channel.send(embed)
     const embed = new Discord.RichEmbed()
     .setDescription(`${message.author.username} Has Set ${mem.user.username} Nick To ${args[1]}`)
     message.channel.send(embed);
+  } else if (cmd === `${p}autorole`) {
+    let embed = new Discord.RichEmbed()
+let rolerz = db.get(`autorole_${message.guild.id}`);
+if(rolerz === null) rolerz = 0;
+    if(args[0] === "on") {
+      if(rolerz === 0) {
+if(!args[1]) return message.channel.send(`Define A Role Name`)
+  db.set(`autoroler_${message.guild.id}`, `${message.content.replace(`${p}autorole on `,``)}`)
+db.add(`autorole_${message.guild.id}`, 1)
+  message.guild.createRole({name: db.get(`autoroler_${message.guild.id}`)})
+  embed.setDescription(`AutoRole Activated For Role ${db.get(`autoroler_${message.guild.id}`)}`)
+} else {message.channel.send(`AutoRole Already Active`)}
+    } else if(args[0] === "off") {
+      if(rolerz === 1) {
+db.subtract(`autorole_${message.guild.id}`, 1)
+embed.setDescription(`AutoRole Deactivated`)
+} else {message.channel.send(`AutoRole Already Deactivated`)}
+    } else {embed.setDescription(`Usage: ${p}autorole On/Off Role-Name`)}
+    message.channel.send(embed)
   } else if (cmd === `${p}welcomer`) {
 if (!message.member.hasPermission('ADMINISTRATOR')) return message.channel.send("You Dont Have The ADMINISTRATOR Permission");
     let joiner = db.get(`joinz_${message.guild.id}`)
@@ -265,7 +286,7 @@ if (!message.member.hasPermission('ADMINISTRATOR')) return message.channel.send(
  if(joiner == 0) return embed.setDescription('Welcomer Already On');
   db.subtract(`joinz_${message.guild.id}`, 1)
 embed.setDescription("Welcomer Was Turned Off")
-   } else {embed.setDescription("Usage: &welcomer on/off")}
+   } else {embed.setDescription(`Usage: ${p}welcomer on/off`)}
    message.channel.send(embed)
   } else if (cmd === `${p}themes`) {
 if (!message.member.hasPermission('ADMINISTRATOR')) return message.channel.send("You Dont Have The ADMINISTRATOR Permission");
@@ -320,7 +341,8 @@ const applyText = (canvas, text) => {
 
 client.on("guildMemberAdd", async (member) => {
     const joiner = db.get(`joinz_${member.guild.id}`)
-
+let rolerz = db.get(`autorole_${member.guild.id}`);
+let amkle = db.get(`autoroler_${member.guild.id}`)
     let thone = db.get(`onef_${member.guild.id}`)
     let thtwo = db.get(`twof_${member.guild.id}`)
     let ththree = db.get(`threef_${member.guild.id}`)
@@ -331,7 +353,12 @@ if(thtwo === null) thtwo = 0;
 if(ththree === null) ththree = 0;
 if(thfour === null) thfour = 0;
 if(thfive === null) thfive = 0;
-
+if(rolerz === null) rolerz = 0;
+if(rolerz === 1) {
+let role = member.guild.roles.find(r => r.name === `${amkle}`)
+console.log(role)
+ member.addRole(role)
+}
     if(joiner >= 1) {
       if(thone === 0 && thtwo === 0 && ththree === 0 && thfour === 0 && thfive === 0) {} else {
     const chn = member.guild.channels.find(ch => ch.name === 'welcome');
