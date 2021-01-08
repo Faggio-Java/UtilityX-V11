@@ -31,7 +31,7 @@ let p = `${db.fetch(`prefix_${message.guild}`)}`;
   if(cmd === `${p}help`){
     const embed = new Discord.RichEmbed()
     .setTitle("Commands")
-    .setDescription(`Moderation: ${p}ban ${p}kick ${p}unban ${p}purge ${p}nick ${p}addrole ${p}removerole ${p}warn ${p}warnings ${p}resetwarnings \n Fun: ${p}kiss ${p}hug ${p}punch ${p}slap ${p}pat \n Utility: ${p}ui ${p}server ${p}avatar ${p}snipe \n Server Settings: ${p}prefix ${p}autorole ${p}welcomer ${p}themes`)
+    .setDescription(`Moderation: ${p}ban ${p}kick ${p}unban ${p}purge ${p}nick ${p}addrole ${p}removerole ${p}warn ${p}warnings ${p}resetwarnings ${p}slowmode \n Fun: ${p}meme ${p}kiss ${p}hug ${p}punch ${p}slap ${p}pat \n Utility: ${p}ui ${p}server ${p}avatar ${p}snipe \n Server Settings: ${p}prefix ${p}autorole ${p}welcomer ${p}themes`)
     message.channel.send(embed);
   } else if(cmd === `${p}prefix`) {
     db.fetch(`prefix_${message.guild}`)
