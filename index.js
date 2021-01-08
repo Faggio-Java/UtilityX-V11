@@ -223,7 +223,12 @@ message.channel.send(embed)
       .setDescription(`${member} Was Unbanned By ${message.author.username}`)
  message.channel.send(Ban)} catch(e) {}
   } else { message.channel.send("You Dont Have The Ban Members Permission")} 
-
+  } else if (cmd === `${p}slowmode`) {
+    try {
+    if(!args[0]) return message.channel.send(`Define Number To Set Slowmode As`)
+      message.channel.setRateLimitPerUser(args[0])
+      message.channel.send(`Set Slowmode To ${args[0]}`)
+    } catch(e) {message.channel.send(`An Error Occured Make Sure Your Using It Correctly Usage: ${p}slowmode [Number]`)}
    } else if (cmd === `${p}kick`) {
       if (!message.member.hasPermission('KICK_MEMBERS')) return message.channel.send("You don't have enough permissions to use this command")
     let member = message.mentions.members.first() || message.guild.members.get(args[0]);
