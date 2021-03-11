@@ -30,7 +30,7 @@ let p = `${db.fetch(`prefix_${message.guild}`)}`;
   if(cmd === `${p}help`){
     const embed = new Discord.RichEmbed()
     .setTitle("Commands")
-    .setDescription(`Moderation: ${p}ban ${p}kick ${p}unban ${p}purge ${p}nick ${p}addrole ${p}removerole ${p}warn ${p}warnings ${p}resetwarnings ${p}slowmode \n Fun: ${p}meme ${p}kiss ${p}hug ${p}punch ${p}slap ${p}pat \n Utility: ${p}ui ${p}server ${p}avatar ${p}snipe ${p}usage \n Server Settings: ${p}prefix ${p}autorole ${p}welcomer ${p}themes`)
+    .setDescription(`Moderation: ${p}ban ${p}kick ${p}unban ${p}purge ${p}nick ${p}addrole ${p}removerole ${p}warn ${p}warnings ${p}resetwarnings ${p}slowmode \n Fun: ${p}meme ${p}kiss ${p}hug ${p}punch ${p}slap ${p}pat \n Utility: ${p}ui ${p}server ${p}avatar ${p}snipe ${p}usage ${p}info \n Server Settings: ${p}prefix ${p}autorole ${p}welcomer ${p}themes`)
     message.channel.send(embed);
   } else if(cmd === `${p}prefix`) {
     db.fetch(`prefix_${message.guild}`)
@@ -79,6 +79,11 @@ message.channel.send(embed)
   } else if(args[0] === "welcomer") { embed.setDescription(`${p}welcomer [On/Off] []`) 
   } else {embed.setDescription(`Define Command Name`)}
    message.channel.send(embed)
+} else if (cmd === `${p}info`) {
+  const embed = new Discord.RichEmbed()
+  .setTitle(`UtilityX Bot Info`)
+  .setDescription("**Creator:** DecoyOctopus [Invite me](https://top.gg/bot/780293512439660555) Creation Date: November/23/2020")
+  message.channel.send(embed)
 } else if (cmd === `${p}warn`) {
   if (!message.member.hasPermission('ADMINISTRATOR')) return message.channel.send("You Dont Have The Administrator Permission");
          if (message.mentions.users.first()) {
