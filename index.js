@@ -11,7 +11,6 @@ const Canvas = require('canvas')
 
 //Bots On Discord.js V11 Cause i just prefer it 
 client.on('ready', (message) => {
-  client.guilds.forEach(g => console.log(g.name))
   console.log(`Logged in as ${client.user.tag}!`);
   client.user.setPresence({ game: { name: '&help For List Of Cmds' }, status: 'online' });
 });
@@ -31,7 +30,7 @@ let p = `${db.fetch(`prefix_${message.guild}`)}`;
   if(cmd === `${p}help`){
     const embed = new Discord.RichEmbed()
     .setTitle("Commands")
-    .setDescription(`Moderation: ${p}ban ${p}kick ${p}unban ${p}purge ${p}nick ${p}addrole ${p}removerole ${p}warn ${p}warnings ${p}resetwarnings ${p}slowmode \n Fun: ${p}meme ${p}kiss ${p}hug ${p}punch ${p}slap ${p}pat \n Utility: ${p}ui ${p}server ${p}avatar ${p}snipe \n Server Settings: ${p}prefix ${p}autorole ${p}welcomer ${p}themes`)
+    .setDescription(`Moderation: ${p}ban ${p}kick ${p}unban ${p}purge ${p}nick ${p}addrole ${p}removerole ${p}warn ${p}warnings ${p}resetwarnings ${p}slowmode \n Fun: ${p}meme ${p}kiss ${p}hug ${p}punch ${p}slap ${p}pat \n Utility: ${p}ui ${p}server ${p}avatar ${p}snipe ${p}usage \n Server Settings: ${p}prefix ${p}autorole ${p}welcomer ${p}themes`)
     message.channel.send(embed);
   } else if(cmd === `${p}prefix`) {
     db.fetch(`prefix_${message.guild}`)
@@ -258,6 +257,7 @@ message.channel.send(embed)
       message.channel.setRateLimitPerUser(args[0])
       message.channel.send(`Set Slowmode To ${args[0]}`)
     } catch(e) {message.channel.send(`An Error Occured Make Sure Your Using It Correctly Usage: ${p}slowmode [Number]`)}
+
    } else if (cmd === `${p}kick`) {
       if (!message.member.hasPermission('KICK_MEMBERS')) return message.channel.send("You don't have enough permissions to use this command")
     let member = message.mentions.members.first() || message.guild.members.get(args[0]);
