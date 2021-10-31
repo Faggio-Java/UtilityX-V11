@@ -82,7 +82,7 @@ message.channel.send(embed)
 } else if (cmd === `${p}info`) {
   const embed = new Discord.RichEmbed()
   .setTitle(`UtilityX Bot Info`)
-  .setDescription("**Creator:** DecoyOctopus [Invite me](https://top.gg/bot/780293512439660555) Creation Date: November/23/2020")
+  .setDescription("**Creator:**  ShadowKills#3319 Creation Date: November/23/2020")
   message.channel.send(embed)
 } else if (cmd === `${p}warn`) {
   if (!message.member.hasPermission('ADMINISTRATOR')) return message.channel.send("You Dont Have The Administrator Permission");
