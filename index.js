@@ -19,7 +19,51 @@ client.on('ready', (message) => {
 client.on('error', (err) => {
   console.log(err.message)
    });
+   client.on("messageCreate", (message) => {
+    let p = `${db.fetch(`prefix_${message.guild}`)}`;
+     if(message.author.bot) return;
+     if(!message.content.startsWith(p)) return;
+    const args = message.content.slice().trim().split(/ +/g);
+    const member = message.mentions.users.first();
+    var triggers = [`${p}kiss`,`${p}hug`,`${p}punch`,`${p}slap`,`${p}pat`]
+      for (var i = 0; i < triggers.length; i++) {
+        if (message.content.includes(triggers[i])) {
+      
+if(!member) return message.channel.send("Mention Someone")
+if (member === message.author) return message.channel.send(`You Cant ${message.content.replace(`${p} ${args[0]}`, '')}  Yourself`)
+       let kiss = ["https://cdn.weeb.sh/images/ByVQha_w-.gif","https://cdn.weeb.sh/images/ryoW3T_vW.gif","https://cdn.weeb.sh/images/B1yv36_PZ.gif","https://cdn.weeb.sh/images/ryEvhTOwW.gif","https://cdn.weeb.sh/images/SyY0j6Ov-.gif"]
+       let hug = ["https://cdn.weeb.sh/images/rkx1dJ25z.gif","https://cdn.weeb.sh/images/Sk-xxs3C-.gif","https://cdn.weeb.sh/images/HJTWcTNCZ.gif","https://cdn.weeb.sh/images/rk_6GyncG.gif","https://cdn.weeb.sh/images/S18oOuQw-.gif"]
+       let punch = ["https://cdn.weeb.sh/images/SJAfH5TOz.gif","https://cdn.weeb.sh/images/SyYbP6W-z.gif","https://cdn.weeb.sh/images/rkkZP6Z-G.gif","https://cdn.weeb.sh/images/rJHLDT-Wz.gif","https://cdn.weeb.sh/images/rJRUk2PLz.gif"]
+       let slap = ["https://cdn.weeb.sh/images/BkzyEktv-.gif","https://cdn.weeb.sh/images/SkSCyl5yz.gif","https://cdn.weeb.sh/images/ryv3myFDZ.gif","https://cdn.weeb.sh/images/HkA6mJFP-.gif","https://cdn.weeb.sh/images/rJvR71KPb.gif"]
+       let pat = ["https://cdn.weeb.sh/images/BJp1lyYD-.gif","https://cdn.weeb.sh/images/B1TQcTNCZ.gif","https://cdn.weeb.sh/images/BJnD9a4Rb.gif","https://cdn.weeb.sh/images/Byd3kktw-.gif","https://cdn.weeb.sh/images/rkBZkRttW.gif"]
 
+       let picker = Math.floor(Math.random() * Math.floor(args[0].substring(1).length)) 
+
+       const embed=new Discord.MessageEmbed()
+       .setTitle(`${message.mentions.users.first().username} Was ${args[0].substring(1)} By ${message.author.username}`)
+
+switch(message.content) {
+  case `${p}kiss ${args[1]}`:
+    embed.setImage(kiss[picker])
+  break;
+  case `${p}hug ${args[1]}`:
+    embed.setImage(hug[picker])
+  break;
+  case `${p}punch ${args[1]}`:
+    embed.setImage(punch[picker])
+  break;
+  case `${p}slap ${args[1]}`:
+    embed.setImage(slap[picker])
+  break;
+  case `${p}pat ${args[1]}`:
+    embed.setImage(pat[picker])
+  break;
+}
+
+message.channel.send({embeds: [embed]})
+break;
+} }
+   });
 client.on("messageCreate", async (message) => {
   if (message.author.bot) return;
   if(db.fetch(`prefix_${message.guild}`) === null) return db.set(`prefix_${message.guild}`, `&`);
@@ -42,29 +86,23 @@ let p = `${db.fetch(`prefix_${message.guild}`)}`;
             var member = message.guild.member(message.mentions.users.first() || message.guild.members.cache.get(args[0]));
             if(!member) return message.reply('Mention Someone')
             let rolerz = db.get(`autorole_${message.guild.id}`);
-            if(rolerz === null) rolerz = 0
-            if(rolerz === 0) mainrole = null 
-            if(rolerz === 1) {let mainrole = db.get(`autoroler_${message.member.guild.id}`)}
+            if(rolerz === null) {rolerz = 0} else if(mainrole = null) {mainrole = 0}
+            let mainrole = db.get(`autoroler_${message.member.guild.id}`)
             let role = message.guild.roles.cache.find(role => role.name === "Muted");
 if(!message.guild.roles.cache.find(role => role.name === "Muted")) {
-message.guild.roles.create({
-                        data: {
+message.guild.roles.create({ data: {
                           name: 'Muted',
-                          color: '#ff0000',
-                          permissions: {
-                              SEND_MESSAGES: false,
-                              ADD_REACTIONS: false
-                          }
-                        },
-                        reason: 'Mute role',
-                      }).catch(console.log);
+                           color: '#ff0000',
+                            permissions: {
+                              SEND_MESSAGES: false
+                          } } }).catch(console.log);
 }
             let time = args[1];
             if (!time) {
                 return message.reply("Didnt specify a time");
             }
 
-            if(!mainrole) {} else {member.roles.remove(mainrole)}
+            if(mainrole) {member.roles.remove(mainrole)}
             member.roles.add(role);
 
             embed.setDescription(`${member.user.username} Was Muted By ${message.author.username} for ${ms(ms(time))}`) 
@@ -86,26 +124,23 @@ message.guild.roles.create({
                 const embed = new Discord.MessageEmbed()
                         if(message.member.roles.cache.find(r => r.name === "Members")) {message.channel.send(`${member.user.username} isnt muted`)} else {
                 var member = message.guild.member(message.mentions.users.first() || message.guild.members.cache.get(args[0]));
-            if(!member) return message.reply('Mention Someone')
+            if(!member) return message.channel.send('Mention Someone')
                             
             let rolerz = db.get(`autorole_${message.guild.id}`);
-            if(rolerz === null) rolerz = 0
-            if(rolerz === 0) mainrole = null 
-            if(rolerz === 1) {let mainrole = db.get(`autoroler_${message.member.guild.id}`)}
-                            
-            let role = message.guild.roles.cache.find(role => role.name === "Muted");
+            if(rolerz === null) {rolerz = 0} else if(mainrole === 0) {mainrole = null} 
+            let mainrole = db.get(`autoroler_${message.member.guild.id}`)
 
-                if(!mainrole) {} else {member.roles.add(mainrole)}
-                member.roles.remove(role);
+                if(mainrole) {member.roles.add(mainrole)}
+                member.roles.remove(message.guild.roles.cache.find(role => role.name === "Muted"));
                 embed.setDescription(`${member.user.username} has been unmuted`)
 message.channel.send({embeds: [embed]}) }
 } else if (cmd === `${p}avatar`) {
-            let member=message.mentions.users.first()
+            let member = message.mentions.users.first()
         if(member){
-            const emb=new Discord.MessageEmbed().setImage(member.displayAvatarURL())
+            const emb = new Discord.MessageEmbed().setImage(member.displayAvatarURL())
             message.channel.send({embeds: [emb]})
         }else{
-            const emb=new Discord.MessageEmbed().setImage(message.author.displayAvatarURL())
+            const emb = new Discord.MessageEmbed().setImage(message.author.displayAvatarURL())
             message.channel.send({embeds: [emb]})
         }
   } else if (cmd === `${p}ui`) {
@@ -153,7 +188,7 @@ message.channel.send({embeds: [embed]})
 } else if (cmd === `${p}info`) {
   const embed = new Discord.MessageEmbed()
   .setTitle(`UtilityX Bot Info`)
-  .setDescription("**Creator:** DecoyOctopus [Invite me](https://top.gg/bot/780293512439660555) Creation Date: November/23/2020")
+  .setDescription("**Creator:** ShadowKills#3319 Creation Date: November/23/2020")
   message.channel.send({embeds: [embed]})
 } else if (cmd === `${p}warn`) {
     let level = db.get(`level_${message.guild.id}_${message.mentions.users.first()}`)
@@ -204,61 +239,7 @@ message.channel.send(`Cleared Warns For ${args[0]}`)
     embed.setTitle(JSON.parse(response.body)[0].data.children[0].data.title);
     embed.setImage(`${JSON.parse(response.body)[0].data.children[0].data.url}`);
     message.channel.send({embeds: [embed]}) })
-  } else if (cmd === `${p}kiss`) {
-       if (message.mentions.users.first()) {
-        
-   let kisses = ["https://cdn.weeb.sh/images/ByVQha_w-.gif","https://cdn.weeb.sh/images/ryoW3T_vW.gif","https://cdn.weeb.sh/images/B1yv36_PZ.gif","https://cdn.weeb.sh/images/ryEvhTOwW.gif","https://cdn.weeb.sh/images/SyY0j6Ov-.gif"]
-  let kisser = Math.floor(Math.random() * Math.floor(kisses.length)); 
-const kissed = new Discord.MessageEmbed()
-.setTitle(`${message.mentions.users.first().username} Was Kissed By ${message.author.username}`)
-.setImage(kisses[kisser])
-if (message.mentions.users.first() === message.author) return message.channel.send("You Cant Kiss Yourself")
-message.channel.send({embeds: [kissed]})
-} else {message.channel.send("Mention Someone")}
-  } else if (cmd === `${p}hug`) {
-       if (message.mentions.users.first()) {
-                
-   let hugs = ["https://cdn.weeb.sh/images/rkx1dJ25z.gif","https://cdn.weeb.sh/images/Sk-xxs3C-.gif","https://cdn.weeb.sh/images/HJTWcTNCZ.gif","https://cdn.weeb.sh/images/rk_6GyncG.gif","https://cdn.weeb.sh/images/S18oOuQw-.gif"]
-  let hugger = Math.floor(Math.random() * Math.floor(hugs.length)); 
-const hugged = new Discord.MessageEmbed()
-.setTitle(`${message.mentions.users.first().username} Was Hugged By ${message.author.username}`)
-.setImage(hugs[hugger])
-if (message.mentions.users.first() === message.author) return message.channel.send("You Cant Hug Yourself")
- message.channel.send({embeds: [hugged]})
-} else {message.channel.send("Mention Someone")}
-  } else if (cmd === `${p}punch`) {
-       if (message.mentions.users.first()) {
-                
-   let punchs = ["https://cdn.weeb.sh/images/SJAfH5TOz.gif","https://cdn.weeb.sh/images/SyYbP6W-z.gif","https://cdn.weeb.sh/images/rkkZP6Z-G.gif","https://cdn.weeb.sh/images/rJHLDT-Wz.gif","https://cdn.weeb.sh/images/rJRUk2PLz.gif"]
-  let puncher = Math.floor(Math.random() * Math.floor(punchs.length)); 
-const punchsed = new Discord.MessageEmbed()
-.setTitle(`${message.mentions.users.first().username} Was Punched By ${message.author.username}`)
-.setImage(punchs[puncher])
-if (message.mentions.users.first() === message.author) return message.channel.send("You Cant Punch Yourself")
-message.channel.send({embeds: [punchsed]})
-} else {message.channel.send("Mention Someone")}
-  } else if (cmd === `${p}slap`) {
-       if (message.mentions.users.first()) {
-                
-   let slaps = ["https://cdn.weeb.sh/images/BkzyEktv-.gif","https://cdn.weeb.sh/images/SkSCyl5yz.gif","https://cdn.weeb.sh/images/ryv3myFDZ.gif","https://cdn.weeb.sh/images/HkA6mJFP-.gif","https://cdn.weeb.sh/images/rJvR71KPb.gif"]
-  let slapper = Math.floor(Math.random() * Math.floor(slaps.length)); 
-const slapped = new Discord.MessageEmbed()
-.setTitle(`${message.mentions.users.first().username} Was Slapped By ${message.author.username}`)
-.setImage(slaps[slapper])
-if (message.mentions.users.first() === message.author) return message.channel.send("You Cant Slap Yourself")
-message.channel.send({embeds: [slapped]})
-} else {message.channel.send("Mention Someone")}
-  } else if (cmd === `${p}pat`) {
-       if (message.mentions.users.first()) {
-                
-   let pats = ["https://cdn.weeb.sh/images/BJp1lyYD-.gif","https://cdn.weeb.sh/images/B1TQcTNCZ.gif","https://cdn.weeb.sh/images/BJnD9a4Rb.gif","https://cdn.weeb.sh/images/Byd3kktw-.gif","https://cdn.weeb.sh/images/rkBZkRttW.gif"]
-  let patter = Math.floor(Math.random() * Math.floor(pats.length)); 
-const patted = new Discord.MessageEmbed()
-.setTitle(`${message.mentions.users.first().username} Was Patted By ${message.author.username}`)
-.setImage(pats[patter])
-if (message.mentions.users.first() === message.author) return message.channel.send("You Cant Pat Yourself")
-  message.channel.send({embeds: [patted]})
-} else {message.channel.send("Mention Someone")}
+
   } else if (cmd === `${p}addrole`) {
     if (!message.member.permissions.has(Permissions.FLAGS.MANAGE_ROLES)) return message.channel.send("You Dont Have The Manage Roles Permission");
 stop = 0;
