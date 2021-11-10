@@ -1,7 +1,7 @@
 
 const { Permissions } = require("discord.js");
 const Discord = require("discord.js");
-const client = new Discord.Client({ intents: ["GUILDS", "GUILD_MESSAGES"] })
+const client = new Discord.Client({ intents: ["GUILDS", "GUILD_MESSAGES", "GUILD_MEMBERS"] })
 const db = require('quick.db')
 const fs = require("fs");
 const got = require('got');
@@ -19,51 +19,7 @@ client.on('ready', (message) => {
 client.on('error', (err) => {
   console.log(err.message)
    });
-   client.on("messageCreate", (message) => {
-    let p = `${db.fetch(`prefix_${message.guild}`)}`;
-     if(message.author.bot) return;
-     if(!message.content.startsWith(p)) return;
-    const args = message.content.slice().trim().split(/ +/g);
-    const member = message.mentions.users.first();
-    var triggers = [`${p}kiss`,`${p}hug`,`${p}punch`,`${p}slap`,`${p}pat`]
-      for (var i = 0; i < triggers.length; i++) {
-        if (message.content.includes(triggers[i])) {
-      
-if(!member) return message.channel.send("Mention Someone")
-if (member === message.author) return message.channel.send(`You Cant ${message.content.replace(`${p} ${args[0]}`, '')}  Yourself`)
-       let kiss = ["https://cdn.weeb.sh/images/ByVQha_w-.gif","https://cdn.weeb.sh/images/ryoW3T_vW.gif","https://cdn.weeb.sh/images/B1yv36_PZ.gif","https://cdn.weeb.sh/images/ryEvhTOwW.gif","https://cdn.weeb.sh/images/SyY0j6Ov-.gif"]
-       let hug = ["https://cdn.weeb.sh/images/rkx1dJ25z.gif","https://cdn.weeb.sh/images/Sk-xxs3C-.gif","https://cdn.weeb.sh/images/HJTWcTNCZ.gif","https://cdn.weeb.sh/images/rk_6GyncG.gif","https://cdn.weeb.sh/images/S18oOuQw-.gif"]
-       let punch = ["https://cdn.weeb.sh/images/SJAfH5TOz.gif","https://cdn.weeb.sh/images/SyYbP6W-z.gif","https://cdn.weeb.sh/images/rkkZP6Z-G.gif","https://cdn.weeb.sh/images/rJHLDT-Wz.gif","https://cdn.weeb.sh/images/rJRUk2PLz.gif"]
-       let slap = ["https://cdn.weeb.sh/images/BkzyEktv-.gif","https://cdn.weeb.sh/images/SkSCyl5yz.gif","https://cdn.weeb.sh/images/ryv3myFDZ.gif","https://cdn.weeb.sh/images/HkA6mJFP-.gif","https://cdn.weeb.sh/images/rJvR71KPb.gif"]
-       let pat = ["https://cdn.weeb.sh/images/BJp1lyYD-.gif","https://cdn.weeb.sh/images/B1TQcTNCZ.gif","https://cdn.weeb.sh/images/BJnD9a4Rb.gif","https://cdn.weeb.sh/images/Byd3kktw-.gif","https://cdn.weeb.sh/images/rkBZkRttW.gif"]
 
-       let picker = Math.floor(Math.random() * Math.floor(args[0].substring(1).length)) 
-
-       const embed=new Discord.MessageEmbed()
-       .setTitle(`${message.mentions.users.first().username} Was ${args[0].substring(1)} By ${message.author.username}`)
-
-switch(message.content) {
-  case `${p}kiss ${args[1]}`:
-    embed.setImage(kiss[picker])
-  break;
-  case `${p}hug ${args[1]}`:
-    embed.setImage(hug[picker])
-  break;
-  case `${p}punch ${args[1]}`:
-    embed.setImage(punch[picker])
-  break;
-  case `${p}slap ${args[1]}`:
-    embed.setImage(slap[picker])
-  break;
-  case `${p}pat ${args[1]}`:
-    embed.setImage(pat[picker])
-  break;
-}
-
-message.channel.send({embeds: [embed]})
-break;
-} }
-   });
 client.on("messageCreate", async (message) => {
   if (message.author.bot) return;
   if(db.fetch(`prefix_${message.guild}`) === null) return db.set(`prefix_${message.guild}`, `&`);
@@ -73,7 +29,7 @@ let p = `${db.fetch(`prefix_${message.guild}`)}`;
 
   if(cmd === `${p}help`){
     const embed = new Discord.MessageEmbed().setTitle("Commands")
-    .setDescription(`Moderation:${p}ban ${p}kick ${p}purge ${p}nick ${p}addrole ${p}removerole ${p}warn ${p}warnings ${p}resetwarnings ${p}slowmode  ${p}mute ${p}unmute \n Fun: ${p}meme ${p}kiss ${p}hug ${p}punch ${p}slap ${p}pat \n Utility: ${p}ui ${p}server ${p}avatar ${p}snipe ${p}usage ${p}info \n Server Settings: ${p}prefix ${p}autorole ${p}welcomer ${p}themes`)
+    .setDescription(`Moderation:${p}ban ${p}kick ${p}purge ${p}nick ${p}addrole ${p}removerole ${p}warn ${p}warnings ${p}resetwarnings ${p}slowmode  ${p}mute ${p}unmute \n Fun: ${p}meme ${p}kiss ${p}hug ${p}punch ${p}slap ${p}pat \n Utility: ${p}ui ${p}server ${p}avatar ${p}snipe ${p}usage ${p}info \n Server Settings: ${p}prefix`)
     message.channel.send({ embeds: [embed] })
   } else if(cmd === `${p}prefix`) {
     db.fetch(`prefix_${message.guild}`)
@@ -161,7 +117,6 @@ message.channel.send({embeds: [embed]})
   if(args[0] === "themes") { embed.setDescription(`${p}themes [Number 1-5]`) .setFooter(`Note: ${p}themes Show All Themes`)
   } else if(args[0] === "ban") { embed.setDescription(`${p}ban [@user]`)
   } else if(args[0] === "kick") { embed.setDescription(`${p}kick [@user]`)
-  } else if(args[0] === "unban") { embed.setDescription(`${p}unban [user_id]`)
   } else if(args[0] === "purge") { embed.setDescription(`${p}purge [Number 1-100]`)
   } else if(args[0] === "nick") { embed.setDescription(`${p}nick [@user] [Nickname]`)
   } else if(args[0] === "addrole") { embed.setDescription(`${p}addrole [@user] [role_name]`)
@@ -182,7 +137,6 @@ message.channel.send({embeds: [embed]})
   } else if(args[0] === "snipe") { embed.setDescription(`${p}snipe`)
   } else if(args[0] === "prefix") { embed.setDescription(`${p}prefix [Digit To Set Prefix As]`)
   } else if(args[0] === "autorole") {  embed.setDescription(`${p}autorole [On/Off] [Role_Name]`)
-  } else if(args[0] === "welcomer") { embed.setDescription(`${p}welcomer [On/Off] []`) 
   } else {embed.setDescription(`Define Command Name`)}
   message.channel.send({embeds: [embed]})
 } else if (cmd === `${p}info`) {
@@ -321,162 +275,54 @@ stop = null;
       const embed = new Discord.MessageEmbed()
     .setDescription(`${message.author.username} Has Set ${mem.user.username} Nick To ${args[1]}`)
     message.channel.send({embeds: [embed]})}
-  } else if (cmd === `${p}autorole`) {
-    let embed = new Discord.MessageEmbed()
-let rolerz = db.get(`autorole_${message.guild.id}`);
-if(rolerz === null) rolerz = 0;
-    if(args[0] === "on") {
-      if(rolerz === 0) {
-if(!args[1]) return message.channel.send(`Define A Role Name`)
-  db.set(`autoroler_${message.guild.id}`, `${message.content.replace(`${p}autorole on `,``)}`)
-db.add(`autorole_${message.guild.id}`, 1)
-  message.guild.createRole({name: db.get(`autoroler_${message.guild.id}`)})
-  embed.setDescription(`AutoRole Activated For Role ${db.get(`autoroler_${message.guild.id}`)}`)
-} else {message.channel.send(`AutoRole Already Active`)}
-    } else if(args[0] === "off") {
-      if(rolerz === 1) {
-db.subtract(`autorole_${message.guild.id}`, 1)
-embed.setDescription(`AutoRole Deactivated`)
-} else {message.channel.send(`AutoRole Already Deactivated`)}
-    } else {embed.setDescription(`Usage: ${p}autorole On/Off Role-Name`)}
-    message.channel.send({embeds: [embed]})
-  } else if (cmd === `${p}welcomer`) {
-    if (!message.member.permissions.has(Permissions.FLAGS.ADMINISTRATOR)) return message.channel.send("You Dont Have The ADMINISTRATOR Permission");
-    let joiner = db.get(`joinz_${message.guild.id}`)
-    if(joiner === null) joiner = 0;
-    const embed = new Discord.MessageEmbed()
-  if(args[0] === "on") {
-    if(joiner >= 1) return embed.setDescription('Welcomer Already On');
-    db.add(`joinz_${message.guild.id}`, 1)
-  message.guild.channels.create('welcome', 'text')
-  embed.setDescription("Welcomer Was Turned On Use &themes And Pick A Theme To Activate It")
-   } else if(args[0] === "off") {
- if(joiner == 0) return embed.setDescription('Welcomer Already On');
-  db.subtract(`joinz_${message.guild.id}`, 1)
-embed.setDescription("Welcomer Was Turned Off")
-   } else {embed.setDescription(`Usage: ${p}welcomer on/off`)}
-   message.channel.send({embeds: [embed]})
-  } else if (cmd === `${p}themes`) {
-    if (!message.member.permissions.has(Permissions.FLAGS.ADMINISTRATOR)) return message.channel.send("You Dont Have The ADMINISTRATOR Permission");
-    let theme = db.fetch(`theme_${message.guild.id}`)
-
-if(theme === null) theme = 0;
-
-if(args[0] === "1") {
-db.set(`theme_${message.guild.id}`, 1) 
-    } else if(args[0] === "2") {
-db.set(`theme_${message.guild.id}`, 2)
-    } else if(args[0] === "3") {
-db.set(`theme_${message.guild.id}`, 3)
-    } else if(args[0] === "4") {
-db.set(`theme_${message.guild.id}`, 4)
-    } else if(args[0] === "5") {
-db.set(`theme_${message.guild.id}`, 5)
-} else if(args[0] === "5" && args[0] === "4" && args[0] === "3" && args[0] === "2" && args[0] === "1") {
-if(theme >= 0) return db.set(`theme_${message.guild.id}`, 0)
-message.channel.send(`Theme-${args[0]} Was Turned On`) 
-} else {
-      const embed = new Discord.MessageEmbed()
-      .setDescription(`1: Theme 1 [Preview](https://images.pexels.com/photos/956981/milky-way-starry-sky-night-sky-star-956981.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500) \n 2: Theme 2 [Preview](https://images.pexels.com/photos/325185/pexels-photo-325185.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500)  \n 3: Theme 3 [Preview](https://images.pexels.com/photos/2341830/pexels-photo-2341830.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500) \n 4: Theme 4 [Preview](https://images.pexels.com/photos/3586966/pexels-photo-3586966.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500) \n 5: Theme 5 [Preview](https://images.pexels.com/photos/1933320/pexels-photo-1933320.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500)`)
-      message.channel.send({embeds: [embed]})
-    } 
   }
 });
 
-const applyText = (canvas, text) => {
-	const context = canvas.getContext('2d');
-
-	let fontSize = 70;
-
-	do {
-		context.font = `${fontSize -= 10}px sans-serif`;
-	} while (context.measureText(text).width > canvas.width - 300);
-
-	return context.font;
-};
-
-client.on("guildMemberAdd", async (member) => {
-    const joiner = db.get(`joinz_${member.guild.id}`)
-let rolerz = db.get(`autorole_${member.guild.id}`);
-let amkle = db.get(`autoroler_${member.guild.id}`)
-    let theme = db.get(`theme_${member.guild.id}`)
-if(theme === null) theme = 0;
-if(rolerz === null) rolerz = 0;
-if(rolerz === 1) {
-let role = member.guild.roles.cache.find(r => r.name === `${amkle}`)
-console.log(role)
- member.roles.add(role)
-}
-    if(joiner >= 1) {
-      if(theme === 0) {}} else {
-    const chn = member.guild.channels.cache.find(ch => ch.name === 'welcome');
-    if(!chn) return;
-
-    const canvas = Canvas.createCanvas(700, 250);
-    const ctx = canvas.getContext('2d');
-    let background = await Canvas.loadImage(`./Theme-${theme}.jpg`);
-    ctx.drawImage(background, 0, 0, canvas.width, canvas.height);
-
-    ctx.strokeStyle = '#74037b';
-    ctx.strokeRect(0, 0, canvas.width, canvas.height);
-
-    ctx.font = '28px sans-serif';
-    ctx.fillStyle = '#ffffff';
-    ctx.fillText(`Welcome to ${member.guild}`, canvas.width / 2.5, canvas.height / 3.5);
-
-    ctx.font = applyText(canvas, `${member.displayName}!`);
-    ctx.fillStyle = '#ffffff';
-    ctx.fillText(`${member.displayName}`, canvas.width / 2.5, canvas.height / 1.8);
-
-    ctx.beginPath();
-    ctx.arc(125, 125, 100, 0, Math.PI * 2, true);
-    ctx.closePath();
-    ctx.clip();
-
-    const avatar = await Canvas.loadImage(member.user.displayAvatarURL);
-    ctx.drawImage(avatar, 25, 25, 200, 200);
-
-    const attachment = new Discord.Attachment(canvas.toBuffer(), 'welcome-image.png');
-
-    chn.send(attachment) }
-});
-
-client.on("guildMemberRemove", async (member) => {
-      const joiner = db.get(`joinz_${member.guild.id}`)
-
-let theme = db.get(`theme_${member.guild.id}`)
+client.on("messageCreate", (message) => {
+  let p = `${db.fetch(`prefix_${message.guild}`)}`;
+   if(message.author.bot) return;
+   if(!message.content.startsWith(p)) return;
+  const args = message.content.slice().trim().split(/ +/g);
+  const member = message.mentions.users.first();
+  var triggers = [`${p}kiss`,`${p}hug`,`${p}punch`,`${p}slap`,`${p}pat`]
+    for (var i = 0; i < triggers.length; i++) {
+      if (message.content.includes(triggers[i])) {
     
-if(theme === null) theme = 0;
+if(!member) return message.channel.send("Mention Someone")
+if (member === message.author) return message.channel.send(`You Cant ${message.content.replace(`${p} ${args[0]}`, '')}  Yourself`)
+     let kiss = ["https://cdn.weeb.sh/images/ByVQha_w-.gif","https://cdn.weeb.sh/images/ryoW3T_vW.gif","https://cdn.weeb.sh/images/B1yv36_PZ.gif","https://cdn.weeb.sh/images/ryEvhTOwW.gif","https://cdn.weeb.sh/images/SyY0j6Ov-.gif"]
+     let hug = ["https://cdn.weeb.sh/images/rkx1dJ25z.gif","https://cdn.weeb.sh/images/Sk-xxs3C-.gif","https://cdn.weeb.sh/images/HJTWcTNCZ.gif","https://cdn.weeb.sh/images/rk_6GyncG.gif","https://cdn.weeb.sh/images/S18oOuQw-.gif"]
+     let punch = ["https://cdn.weeb.sh/images/SJAfH5TOz.gif","https://cdn.weeb.sh/images/SyYbP6W-z.gif","https://cdn.weeb.sh/images/rkkZP6Z-G.gif","https://cdn.weeb.sh/images/rJHLDT-Wz.gif","https://cdn.weeb.sh/images/rJRUk2PLz.gif"]
+     let slap = ["https://cdn.weeb.sh/images/BkzyEktv-.gif","https://cdn.weeb.sh/images/SkSCyl5yz.gif","https://cdn.weeb.sh/images/ryv3myFDZ.gif","https://cdn.weeb.sh/images/HkA6mJFP-.gif","https://cdn.weeb.sh/images/rJvR71KPb.gif"]
+     let pat = ["https://cdn.weeb.sh/images/BJp1lyYD-.gif","https://cdn.weeb.sh/images/B1TQcTNCZ.gif","https://cdn.weeb.sh/images/BJnD9a4Rb.gif","https://cdn.weeb.sh/images/Byd3kktw-.gif","https://cdn.weeb.sh/images/rkBZkRttW.gif"]
 
-      if(joiner >= 1) {
-    const chn = member.guild.channels.cache.find(ch => ch.name === 'welcome');
-    if(!chn) return;
-    const canvas = Canvas.createCanvas(700, 250);
-    const ctx = canvas.getContext('2d');
+     let picker = Math.floor(Math.random() * Math.floor(args[0].substring(1).length)) 
 
-    let background = await Canvas.loadImage(`./Theme-${theme}.jpg`);
+     const embed=new Discord.MessageEmbed()
+     .setTitle(`${message.mentions.users.first().username} Was ${args[0].substring(1)} By ${message.author.username}`)
 
-    ctx.drawImage(background, 0, 0, canvas.width, canvas.height);
+switch(message.content) {
+case `${p}kiss ${args[1]}`:
+  embed.setImage(kiss[picker])
+break;
+case `${p}hug ${args[1]}`:
+  embed.setImage(hug[picker])
+break;
+case `${p}punch ${args[1]}`:
+  embed.setImage(punch[picker])
+break;
+case `${p}slap ${args[1]}`:
+  embed.setImage(slap[picker])
+break;
+case `${p}pat ${args[1]}`:
+  embed.setImage(pat[picker])
+break;
+}
 
-    ctx.strokeStyle = '#74037b';
-    ctx.strokeRect(0, 0, canvas.width, canvas.height);
-
-    ctx.font = '28px sans-serif';
-    ctx.fillStyle = '#ffffff';
-    ctx.fillText(`${member.displayName} Left ${member.guild}`, canvas.width / 2.5, canvas.height / 1.8);
-
-    ctx.beginPath();
-    ctx.arc(125, 125, 100, 0, Math.PI * 2, true);
-    ctx.closePath();
-    ctx.clip();
-
-    const avatar = await Canvas.loadImage(member.user.displayAvatarURL);
-    ctx.drawImage(avatar, 25, 25, 200, 200);
-
-    const attachment = new Discord.Attachment(canvas.toBuffer(), 'leave-image.png');
-
-    chn.send(attachment) }
-});
+message.channel.send({embeds: [embed]})
+break;
+} }
+ });
 
 client.on('messageDelete', message => {
 if(message.author.bot) return;
