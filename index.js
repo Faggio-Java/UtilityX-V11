@@ -114,30 +114,38 @@ message.channel.send({embeds: [embed]})
   message.channel.send({embeds: [embed]})
 } else if (cmd === `${p}usage`) {
   const embed = new Discord.MessageEmbed()
-  if(args[0] === "themes") { embed.setDescription(`${p}themes [Number 1-5]`) .setFooter(`Note: ${p}themes Show All Themes`)
-  } else if(args[0] === "ban") { embed.setDescription(`${p}ban [@user]`)
-  } else if(args[0] === "kick") { embed.setDescription(`${p}kick [@user]`)
-  } else if(args[0] === "purge") { embed.setDescription(`${p}purge [Number 1-100]`)
-  } else if(args[0] === "nick") { embed.setDescription(`${p}nick [@user] [Nickname]`)
-  } else if(args[0] === "addrole") { embed.setDescription(`${p}addrole [@user] [role_name]`)
-  } else if(args[0] === "removerole") { embed.setDescription(`${p}removerole [@user] [role_name]`)
-  } else if(args[0] === "warn") { embed.setDescription(`${p}warn [@user] [reason]`)
-  } else if(args[0] === "warnings") { embed.setDescription(`${p}warnings [@user]`)
-  } else if(args[0] === "resetwarnings") { embed.setDescription(`${p}resetwarnings [@user]`)
-  } else if(args[0] === "slowmode") { embed.setDescription(`${p}slowmode [Number To Set Slowmode As]`)
-  } else if(args[0] === "meme") { embed.setDescription(`${p}meme`)
-  } else if(args[0] === "kiss") { embed.setDescription(`${p}kiss [@user]`)
-  } else if(args[0] === "hug") { embed.setDescription(`${p}hug [@user]`)
-  } else if(args[0] === "punch") { embed.setDescription(`${p}punch [@user]`)
-  } else if(args[0] === "slap") { embed.setDescription(`${p}slap [@user]`)
-  } else if(args[0] === "pat") { embed.setDescription(`${p}pat [@user]`)
-  } else if(args[0] === "ui") { embed.setDescription(`${p}ui [@user]`)
-  } else if(args[0] === "server") { embed.setDescription(`${p}server`)
-  } else if(args[0] === "avatar") { embed.setDescription(`${p}avatar [@user/Nothing]`)
-  } else if(args[0] === "snipe") { embed.setDescription(`${p}snipe`)
-  } else if(args[0] === "prefix") { embed.setDescription(`${p}prefix [Digit To Set Prefix As]`)
-  } else if(args[0] === "autorole") {  embed.setDescription(`${p}autorole [On/Off] [Role_Name]`)
-  } else {embed.setDescription(`Define Command Name`)}
+
+  if ([`${p}usage ban`,`${p}usage ui`,`${p}usage avatar`,`${p}usage kick`,`${p}usage warnings`,`${p}usage resetwarnings`,`${p}usage kiss`,`${p}usage hug`,`${p}usage slap`,`${p}usage punch`,`${p}usage pat`].indexOf(message.content) != -1){
+      embed.setDescription(`${p}${args[0]} [@user]`)
+}
+
+if ([`${p}usage snipe`,`${p}usage meme`,`${p}usage server`].indexOf(message.content) != -1){
+  embed.setDescription(`${p}${args[0]}`)
+}
+
+  switch(message.content) {
+    case `${p}purge`:
+      embed.setDescription(`${p}purge [Number 1-100]`)
+    break;
+    case `${p}nick`:
+      embed.setDescription(`${p}nick [@user] [Nickname]`)
+    break;
+    case `${p}addrole`:
+      embed.setDescription(`${p}addrole [@user] [role_name]`)
+    break;
+    case `${p}removerole`:
+        embed.setDescription(`${p}removerole [@user] [role_name]`)
+    break;
+    case `${p}warn`:
+      embed.setDescription(`${p}warn [@user] [reason]`)
+break;
+case `${p}slowmode`:
+  embed.setDescription(`${p}slowmode [Number To Set Slowmode As]`)
+break;
+case `${p}prefix`:
+  embed.setDescription(`${p}prefix [Digit To Set Prefix As]`)
+break;
+}
   message.channel.send({embeds: [embed]})
 } else if (cmd === `${p}info`) {
   const embed = new Discord.MessageEmbed()
