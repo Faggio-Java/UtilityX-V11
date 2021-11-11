@@ -196,30 +196,30 @@ message.channel.send(`Cleared Warns For ${args[0]}`)
 
   } else if (cmd === `${p}addrole`) {
     if (!message.member.permissions.has(Permissions.FLAGS.MANAGE_ROLES)) return message.channel.send("You Dont Have The Manage Roles Permission");
-stop = 0;
+
    let member = message.mentions.members.first();
-
+   let role = message.mentions.roles.first()
     if(!member) return message.channel.send("Mention Someone");
+    if(!role) return message.channel.send("Mention a Role");
 
-    if(!args[1]) return message.channel.send("Mention a Role");
-    let role = message.guild.roles.cache.find(r => r.name === message.content.replace(`${p}addrole ${args[0]} `, ""))
-await member.roles.add(role).catch(error => {message.channel.send(`Role doesnt exist or is elevated over me`)}).then(stop = 1)
-if(stop === 0) {
+await member.roles.add(role).catch(error => {message.channel.send(`Role doesnt exist or is elevated over me`)}).then()
+
 const embed = new Discord.MessageEmbed()
-.setDescription(`${message.author.username} Added Role ${message.content.replace(`${p}addrole ${args[0]} `, "")} To ${args[0]}`)
-message.channel.send({embeds: [embed]})}
+.setDescription(`${message.author.username} Gave Role ${role} to ${member}`)
+message.channel.send({embeds: [embed]})
 } else if (cmd === `${p}removerole`) {
-stop = 0;
     if (!message.member.permissions.has(Permissions.FLAGS.MANAGE_ROLES))  return message.channel.send("You Dont Have The Manage Roles Permission");
+
 let member = message.mentions.members.first();
+let role = message.mentions.roles.first()
     if(!member) return message.channel.send("Mention Someone");
-    if(!args[1]) return message.channel.send("Mention a Role");
-    let role = message.guild.roles.cache.find(r => r.name === message.content.replace(`${p}removerole ${args[0]} `, ""))
-await member.roles.remove(role).catch(error => {message.channel.send(`Role Doesnt Exist or is elevated over me`)}).then(stop = 1)
-if(stop === 0) {
+    if(!role) return message.channel.send("Mention a Role");
+
+await member.roles.remove(role).catch(error => {message.channel.send(`Role Doesnt Exist or is elevated over me`)}).then()
+
 const embed = new Discord.MessageEmbed()
-.setDescription(`${message.author.username} Removed Role ${message.content.replace(`${p}removerole ${args[0]} `, "")} To ${args[0]}`)
-message.channel.send({embeds: [embed]})}
+.setDescription(`${message.author.username} Removed Role ${role} From ${member}`)
+message.channel.send({embeds: [embed]})
 } else if (cmd === `${p}avatar`) {
 const user = message.mentions.users.first() || message.author;
 const embed = new Discord.MessageEmbed()
@@ -261,19 +261,19 @@ const embed = new Discord.MessageEmbed()
     message.channel.bulkDelete(args[0]);
   } else if (cmd === `${p}snipe`) {
 const embed = new Discord.MessageEmbed()
-.setDescription(`${db.get(`${message.guild.id}_author`, `${message.author.username}`)} Said ${db.get(`${message.guild.id}_message`, `${message.content}`)}`)
+.setDescription(`${db.get(`${message.guild.id}_message`)}`)
 .setFooter(`Sniped By ${message.author.username}`)
 message.channel.send({embeds: [embed]})
   } else if (cmd === `${p}nick`) {
 stop = null;
     if (!message.member.permissions.has(Permissions.FLAGS.MANAGE_NICKNAMES)) return message.channel.send("You Dont Have The Manage Nicks Permission");
-        let mem = message.mentions.members.first(); 
-        if(!mem) return message.channel.send(`Mention Someone`);
-                if(!args[1]) return message.channel.send(`Please Type A Nick To Give ${mem.displayName}`);
-      mem.setNickname(args[1]).catch(error => {message.channel.send("I Dont have the perms to nick that user")}).then(stop = 1)
+        let member = message.mentions.members.first(); 
+        if(!member) return message.channel.send(`Mention Someone`);
+                if(!args[1]) return message.channel.send(`Please Type A Nick To Give ${member.displayName}`);
+                member.setNickname(args[1]).catch(error => {message.channel.send("I Dont have the perms to nick that user")}).then(stop = 1)
     if(stop === 0) {
       const embed = new Discord.MessageEmbed()
-    .setDescription(`${message.author.username} Has Set ${mem.user.username} Nick To ${args[1]}`)
+    .setDescription(`${message.author.username} Has Set ${member.user.username} Nick To ${args[1]}`)
     message.channel.send({embeds: [embed]})}
   }
 });
@@ -326,8 +326,7 @@ break;
 
 client.on('messageDelete', message => {
 if(message.author.bot) return;
-  db.set(`${message.guild.id}_author`, `${message.author.username}`)
-  db.set(`${message.guild.id}_message`, `${message.content}`) 
+  db.set(`${message.guild.id}_message`, `${message.author.username} Said ${message.content}`)
 })
 
 client.login("Token")
