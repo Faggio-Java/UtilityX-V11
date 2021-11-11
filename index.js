@@ -123,6 +123,10 @@ if ([`${p}usage snipe`,`${p}usage meme`,`${p}usage server`].indexOf(message.cont
   embed.setDescription(`${p}${args[0]}`)
 }
 
+if ([`${p}usage addrole`,`${p}usage removerole`].indexOf(message.content) != -1){
+  embed.setDescription(`${p}${args[0]} [@user] [@role]`)
+}
+
   switch(message.content) {
     case `${p}purge`:
       embed.setDescription(`${p}purge [Number 1-100]`)
@@ -130,22 +134,15 @@ if ([`${p}usage snipe`,`${p}usage meme`,`${p}usage server`].indexOf(message.cont
     case `${p}nick`:
       embed.setDescription(`${p}nick [@user] [Nickname]`)
     break;
-    case `${p}addrole`:
-      embed.setDescription(`${p}addrole [@user] [role_name]`)
-    break;
-    case `${p}removerole`:
-        embed.setDescription(`${p}removerole [@user] [role_name]`)
-    break;
     case `${p}warn`:
       embed.setDescription(`${p}warn [@user] [reason]`)
-break;
-case `${p}slowmode`:
-  embed.setDescription(`${p}slowmode [Number To Set Slowmode As]`)
-break;
-case `${p}prefix`:
-  embed.setDescription(`${p}prefix [Digit To Set Prefix As]`)
-break;
-}
+    break;
+    case `${p}slowmode`:
+      embed.setDescription(`${p}slowmode [Number To Set Slowmode As]`)
+    break;
+    case `${p}prefix`:
+      embed.setDescription(`${p}prefix [Digit To Set Prefix As]`)
+    break; }
   message.channel.send({embeds: [embed]})
 } else if (cmd === `${p}info`) {
   const embed = new Discord.MessageEmbed()
