@@ -64,14 +64,10 @@ let p = `${db.fetch(`prefix_${message.guild}`)}`;
                 embed.setDescription(`${member.user.username} has been unmuted`)
 message.channel.send({embeds: [embed]})
 } else if (cmd === `${p}avatar`) {
-            let member = message.mentions.users.first()
-        if(member){
+            let member = message.mentions.users.first() || message.author
+
             const emb = new Discord.MessageEmbed().setImage(member.displayAvatarURL())
             message.channel.send({embeds: [emb]})
-        }else{
-            const emb = new Discord.MessageEmbed().setImage(message.author.displayAvatarURL())
-            message.channel.send({embeds: [emb]})
-        }
   } else if (cmd === `${p}ui`) {
      let user = message.mentions.users.first() || message.author;
     let member = message.mentions.members.first() || message.member;
