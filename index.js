@@ -96,18 +96,16 @@ if ([`${p}usage addrole`,`${p}usage removerole`].indexOf(message.content) != -1)
   embed.setDescription(`${p}${args[0]} [@user] [@role]`)
 }
 
+if ([`${p}usage purge`,`${p}usage slowmode`].indexOf(message.content) != -1){
+  embed.setDescription(`${p}${args[0]} [@user] [Number]`)
+}
+
   switch(message.content) {
-    case `${p}purge`:
-      embed.setDescription(`${p}purge [Number 1-100]`)
-    break;
     case `${p}nick`:
       embed.setDescription(`${p}nick [@user] [Nickname]`)
     break;
     case `${p}warn`:
       embed.setDescription(`${p}warn [@user] [reason]`)
-    break;
-    case `${p}slowmode`:
-      embed.setDescription(`${p}slowmode [Number To Set Slowmode As]`)
     break;
     case `${p}prefix`:
       embed.setDescription(`${p}prefix [Digit To Set Prefix As]`)
