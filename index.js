@@ -1,24 +1,18 @@
-
 const { Permissions } = require("discord.js");
 const Discord = require("discord.js");
 const client = new Discord.Client({ intents: ["GUILDS", "GUILD_MESSAGES", "GUILD_MEMBERS"] })
 const db = require('quick.db')
 const fs = require("fs");
 const got = require('got');
-const moment = require("moment"); 
+const moment = require("moment")
 require("moment-duration-format")
-const fetch = require("node-fetch");
 const Canvas = require('canvas')
 const ms = require('ms')
 
 client.on('ready', (message) => {
   console.log(`Logged in as ${client.user.tag}!`);
-  client.user.setPresence({ game: { name: '&help For List Of Cmds' }, status: 'online' });
+  client.user.setActivity('&help For List Of Cmds');
 });
-
-client.on('error', (err) => {
-  console.log(err.message)
-   });
 
 client.on("messageCreate", async (message) => {
   if (message.author.bot) return;
