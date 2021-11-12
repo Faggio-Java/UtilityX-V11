@@ -31,59 +31,38 @@ let p = `${db.fetch(`prefix_${message.guild}`)}`;
     db.set(`prefix_${message.guild}`, `${args[0]}`)
     message.channel.send(`Set Prefix To ${args[0]}`)
 } else if(cmd === `${p}mute`) {
-    if (!message.member.permissions.has(Permissions.FLAGS.MANAGE_MESSAGES)) {
-                const embed = new Discord.MessageEmbed()
-            var member = message.guild.member(message.mentions.users.first() || message.guild.members.cache.get(args[0]));
-            if(!member) return message.reply('Mention Someone')
-            let rolerz = db.get(`autorole_${message.guild.id}`);
-            if(rolerz === null) {rolerz = 0} else if(mainrole = null) {mainrole = 0}
-            let mainrole = db.get(`autoroler_${message.member.guild.id}`)
-            let role = message.guild.roles.cache.find(role => role.name === "Muted");
-if(!message.guild.roles.cache.find(role => role.name === "Muted")) {
-message.guild.roles.create({ data: {
-                          name: 'Muted',
-                           color: '#ff0000',
-                            permissions: {
-                              SEND_MESSAGES: false
-                          } } }).catch(console.log);
-}
-            let time = args[1];
-            if (!time) {
-                return message.reply("Didnt specify a time");
-            }
+  const embed = new Discord.MessageEmbed()
+  const member = message.mentions.members.first();
+  let role = message.guild.roles.cache.find(role => role.name === 'Muted')
 
-            if(mainrole) {member.roles.remove(mainrole)}
-            member.roles.add(role);
+  if (!member) return message.reply('Mention Someone');
+  if (!args[1]) return message.reply('Define Mute Duration');
 
-            embed.setDescription(`${member.user.username} Was Muted By ${message.author.username} for ${ms(ms(time))}`) 
-            message.channel.send({embeds: [embed]})
+  if (member.id === message.author.id) return message.reply('You cant mute your self!')
+  if (member.id === client.id) return message.reply('You cant mute me!')
 
-            setTimeout( function () {
-                    if(message.member.roles.cache.find(r => r.name === "Members")) {} else {
-                if(mainrole === db.get(`autoroler_${message.member.guild.id}`)) {member.roles.add(mainrole)}
-                member.roles.remove(role);
-                embed.setDescription(`${member.user.username} has been unmuted`) 
-                message.channel.send({embeds: [embed]})}
-            }, ms(time));
+  if (!role) {message.reply(`Can't find "Muted" Role`)}
 
-        } else {
-            return embed.setDescription('You dont have perms') 
-            message.channel.send({embeds: [embed]})
-        } 
+  if (member.roles.cache.has(role)) return message.reply('Cant mute a muted person')
+  if (member.roles.highest.position >= message.member.roles.highest.position) return message.reply('Cant mute moderators')
+
+  await member.roles.add(message.guild.roles.cache.find(role => role.name === 'Muted'))
+  embed.setDescription(`${member.user.username} has been muted for ${ms(ms(args[1]))}`)
+  message.channel.send({embeds: [embed]})
+  setTimeout(() => {
+      member.roles.remove(message.guild.roles.cache.find(role => role.name === 'Muted'))
+  embed.setDescription(`${member.user.username} has been unmuted`)
+  message.channel.send({embeds: [embed]})
+  }, ms(args[1]))
 } else if (cmd === `${p}unmute`) {
                 const embed = new Discord.MessageEmbed()
-                        if(message.member.roles.cache.find(r => r.name === "Members")) {message.channel.send(`${member.user.username} isnt muted`)} else {
-                var member = message.guild.member(message.mentions.users.first() || message.guild.members.cache.get(args[0]));
+                        if(!message.member.roles.cache.find(role => role.name === 'Muted')) return message.channel.send(`${member.user.username} isnt muted`)
+            var member = message.mentions.users.first() || message.guild.members.cache.get(args[0])
             if(!member) return message.channel.send('Mention Someone')
-                            
-            let rolerz = db.get(`autorole_${message.guild.id}`);
-            if(rolerz === null) {rolerz = 0} else if(mainrole === 0) {mainrole = null} 
-            let mainrole = db.get(`autoroler_${message.member.guild.id}`)
 
-                if(mainrole) {member.roles.add(mainrole)}
                 member.roles.remove(message.guild.roles.cache.find(role => role.name === "Muted"));
                 embed.setDescription(`${member.user.username} has been unmuted`)
-message.channel.send({embeds: [embed]}) }
+message.channel.send({embeds: [embed]})
 } else if (cmd === `${p}avatar`) {
             let member = message.mentions.users.first()
         if(member){
