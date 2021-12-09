@@ -6,7 +6,6 @@ const fs = require("fs");
 const got = require('got');
 const moment = require("moment")
 require("moment-duration-format")
-const Canvas = require('canvas')
 const ms = require('ms')
 
 client.on('ready', (message) => {
