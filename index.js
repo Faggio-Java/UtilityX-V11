@@ -32,7 +32,7 @@ client.on('ready', (message) => {
   
       if (!message.content.startsWith(db.fetch(`prefix_${message.guild}`))) return;
 
-      const commandfile = client.commands.get(cmd.slice(db.fetch(`prefix_${message.guild}`).length)) || client.commands.get(client.aliases.get(cmd.slice(db.fetch(`prefix_${message.guild}`).length)));
+      const commandfile = client.commands.get(cmd.slice(prefix.length)) || client.commands.get(client.aliases.get(cmd.slice(prefix.length)));
       try {
         commandfile.run(client, message, args)
         } catch(err) {}
